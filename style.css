@@ -49,3 +49,75 @@ body {
   height: 85%;
   border: 1px solid black;
 }
+
+#buttons-container {
+	/*Rutan som knapparna visas i*/
+  position: fixed;
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+  bottom: 0; 
+}
+
+#button-1-container {
+	/*Rutan som knapparna visas i*/
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+	margin: 5%;
+}
+
+#button-2-container {
+	/*Rutan som knapparna visas i*/
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+	margin: 5%;
+}
+
+#button-3-container {
+	/*Rutan som knapparna visas i*/
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+	margin: 5%;
+}
+
+#button-4-container {
+	/*Rutan som knapparna visas i*/
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+	margin: 5%;
+}
+
+#button-1 {
+	width: 150px;
+	height: 75px;
+  background-image: url(/image.png);
+  background-repeat: no-repeat;
+}
+
+#button-2 {
+	font-size: 20pt;
+	background-color: yellow;
+	color: black;
+	width: 150px;
+	height: 75px;
+}
+
+#button-3 {
+	font-size: 20pt;
+	background-color: yellow;
+	color: black;
+	width: 150px;
+	height: 75px;
+}
+
+#button-4 {
+	font-size: 20pt;
+	background-color: yellow;
+	color: black;
+	width: 150px;
+	height: 75px;
+}
