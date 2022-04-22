@@ -6,16 +6,13 @@
  */
 
 
-// En klass f
-erales r
+// En klass för spelaren
 let player = {
-    chips: 100,  // Antal pengar
-    bet: 0, // Player current bet
-
-
-points: 0, // Antal poäng den rundan
+  chips: 100,  // Antal pengar
+  bet: 0, // Antal satsade pengar
+  points: 0, // Antal poäng
 }
-för// Ett Objekdetolika kortel
+
 
 // Klass för att skapa spelkort
 class Kort {
@@ -38,16 +35,11 @@ class Kort {
     // Ta ett kort överst från leken
     dra_kort() {
       let draget_kort = this.stack.pop();
-      `Du drar ${draget_kort.färg} ${draget_kort.valör}`
+      `Du drar ${draget_kort.bild} ${draget_kort.value}`
       return draget_kort;
     }
   
     // Visa korten som finns i leken (I ordning)
-    visa_lek() {
-      this.stack.forEach((kort) => {
-        console.log(kort.färg, kort.valör);
-      });
-    }
   
     // Visa hur många kort som finns
     visa_längd() {
@@ -66,17 +58,10 @@ class Kort {
   }
   
   
-  const kortlek = new Kortlek();
-  
-  for (let i = 0; i< färger.length;i++){
-    for (let j = 0; j < valörer.length;j++){
-      let kort = new Kort(valörer[j], färger[i])
-      kortlek.lägg_till_kort(kort);
+const kortlek = new Kortlek();
 
-var card = {
-}
 
-  for (let j = 0; j < 6; j++) {
+for (let j = 0; j < 6; j++) {
     for (let i = 2; i <= 14; i++){
         if (i == 14) {
             cardvalue = 11;
@@ -85,15 +70,23 @@ var card = {
         } else {
             cardvalue = i;
         }
-        card[`${i}_of_clubs`] = cardvalue;
-        card[`${i}_of_diamonds`] = cardvalue;
-        card[`${i}_of_diamonds`] = cardvalue;
-        card[`${i}_of_spades`] = cardvalue;
-    
+        let kort = new Kort(`${i}_of_clubs`, cardvalue);
+        kortlek.lägg_till_kort(kort);
+        kort = new Kort(`${i}_of_diamonds`, cardvalue);
+        kortlek.lägg_till_kort(kort);
+        kort = new Kort(`${i}_of_diamonds`,cardvalue);
+        kortlek.lägg_till_kort(kort);
+        kort = new Kort(`${i}_of_spades`, cardvalue);
+        kortlek.lägg_till_kort(kort);
+        
     }
 
 }
-console.log(card.klöver10)
+kortlek.blanda();
+playerCards = [];
+dealerCards = [];
 
-playerCards = []
-dealerCards = []
+currentCard = kortlek.dra_kort();
+cardImag.innerHTML = `<img src="./images/${currentImage}" />`;
+playerCards.push(currentCard)
+
