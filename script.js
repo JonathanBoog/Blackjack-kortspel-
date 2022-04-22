@@ -87,6 +87,10 @@ playerCards = [];
 dealerCards = [];
 
 currentCard = kortlek.dra_kort();
-cardImag.innerHTML = `<img src="./images/${currentImage}" />`;
+//cardImage.innerHTML = `<img src="./images/${currentImage}" />`;
+playerCards.push(currentCard)
+
+currentCard = kortlek.dra_kort();
+//cardImage.innerHTML = `<img src="./images/${currentImage}" />`;
 playerCards.push(currentCard)
 
