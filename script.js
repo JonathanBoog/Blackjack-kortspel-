@@ -85,6 +85,7 @@ for (let j = 0; j < 6; j++) {
 kortlek.blanda();
 playerCards = [];
 dealerCards = [];
+let dealerPoints = 0;
 
 currentCard = kortlek.dra_kort();
 //cardImage.innerHTML = `<img src="./images/${currentImage}" />`;
@@ -92,5 +93,26 @@ playerCards.push(currentCard)
 
 currentCard = kortlek.dra_kort();
 //cardImage.innerHTML = `<img src="./images/${currentImage}" />`;
+dealerCards.push(currentCard)
+
+currentCard = kortlek.dra_kort();
+//cardImage.innerHTML = `<img src="./images/${currentImage}" />`;
 playerCards.push(currentCard)
 
+currentCard = kortlek.dra_kort();
+//cardImage.innerHTML = `<img src="./images/${currentImage}" />`;
+dealerCards.push(currentCard)
+
+for (i in playerCards){
+  player.points += playerCards[i].value;
+}
+for (char in dealerCards){
+  dealerPoints += dealerCards[i].value;
+}
+console.log(player.points,dealerPoints)
+if (player.points === 21 && dealerPoints === 21){
+  console.log('push')
+} else if (player.points === 21){
+  console.log('Du fick BLACKJACK')
+}
+console.log(playerCards, dealerCards)
