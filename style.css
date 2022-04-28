@@ -57,14 +57,19 @@ body {
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
   bottom: 0; 
+  width: 40%;
+  height: 60%;
+
 }
 
 #button-1-container {
-	/*Rutan som knapparna visas i*/
+	/*Rutan som bildutmatningen sker i*/
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-	margin: 5%;
+  margin: 2%;
+  width: 40%;
+  height: 40%;
 }
 
 #button-2-container {
@@ -72,7 +77,9 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-	margin: 5%;
+	margin: 2%;
+  width: 40%;
+  height: 40%;
 }
 
 #button-3-container {
@@ -80,7 +87,9 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-	margin: 5%;
+	margin: 2%;
+  width: 40%;
+  height: 40%;
 }
 
 #button-4-container {
@@ -88,36 +97,8 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-	margin: 5%;
+	margin: 2%;
+  width: 40%;
+  height: 40%;
 }
 
-#button-1 {
-	width: 150px;
-	height: 75px;
-  background-image: url(/image.png);
-  background-repeat: no-repeat;
-}
-
-#button-2 {
-	font-size: 20pt;
-	background-color: yellow;
-	color: black;
-	width: 150px;
-	height: 75px;
-}
-
-#button-3 {
-	font-size: 20pt;
-	background-color: yellow;
-	color: black;
-	width: 150px;
-	height: 75px;
-}
-
-#button-4 {
-	font-size: 20pt;
-	background-color: yellow;
-	color: black;
-	width: 150px;
-	height: 75px;
-}
