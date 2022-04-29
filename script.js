@@ -154,7 +154,6 @@ function startOfGame(){
   dealerPoints = 0;
 
   currentCard = kortlek.dra_kort();
-  console.log(currentCard.bild)
   playerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
   playerCards.push(currentCard)
 
