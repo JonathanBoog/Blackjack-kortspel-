@@ -74,7 +74,10 @@ function doubleDown() {
 }
 
 function stand() {
-  return true;
+  standButton.innerHTML = `<img src=""/>`;
+  hitButton.innerHTML = `<img src=""/>`;
+  doubledownButton.innerHTML = `<img src=""/>`;
+  splitButton.innerHTML = `<img src=""/>`;
 }
 
 function split() {
