@@ -67,9 +67,8 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-  margin: 2%;
-  width: 40%;
-  height: 40%;
+  width: 20%;
+  height: 20%;
 }
 
 #button-2-container {
@@ -77,9 +76,8 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-	margin: 2%;
-  width: 40%;
-  height: 40%;
+  width: 20%;
+  height: 20%;
 }
 
 #button-3-container {
@@ -87,9 +85,8 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-	margin: 2%;
-  width: 40%;
-  height: 40%;
+  width: 20%;
+  height: 20%;
 }
 
 #button-4-container {
@@ -97,8 +94,15 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-	margin: 2%;
-  width: 40%;
-  height: 40%;
+  width: 20%;
+  height: 20%;
 }
 
+#player-card-container {
+  display: flex;
+  flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+  width: 20%;
+  height: 20%;
+
+}
