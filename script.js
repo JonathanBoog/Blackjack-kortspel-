@@ -62,7 +62,7 @@ class Kort {
   
 function hit() {
   currentCard = kortlek.dra_kort();
-  //playerCardImage.innerHTML = `<img src="./images/${currentImage}" />`;
+  playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
   playerCards.push(currentCard)
   player.points += currentCard.value
   showingButtons()
@@ -154,7 +154,8 @@ function startOfGame(){
   dealerPoints = 0;
 
   currentCard = kortlek.dra_kort();
-  //playerCardImage.innerHTML = `<img src="./images/${currentCard.bild}" />`;
+  console.log(currentCard.bild)
+  playerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
   playerCards.push(currentCard)
 
   currentCard = kortlek.dra_kort();
@@ -162,7 +163,7 @@ function startOfGame(){
   dealerCards.push(currentCard)
 
   currentCard = kortlek.dra_kort();
-  //cardImage.innerHTML = `<img src="./images/${currentImage}" />`;
+  playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
   playerCards.push(currentCard)
 
   currentCard = kortlek.dra_kort();
