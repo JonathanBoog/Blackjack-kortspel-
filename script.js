@@ -62,7 +62,7 @@ class Kort {
   
 function hit() {
   currentCard = kortlek.dra_kort();
-  //cardImage.innerHTML = `<img src="./images/${currentImage}" />`;
+  //playerCardImage.innerHTML = `<img src="./images/${currentImage}" />`;
   playerCards.push(currentCard)
 }
 
@@ -189,8 +189,6 @@ while (true){
     console.log('Dealern fick BLACKJACK')
     break
   }
-  console.log(playerCards, dealerCards)
-  console.log(player.points,dealerPoints)
 
   while (true){
     if (true) {
@@ -215,6 +213,8 @@ while (true){
     
 
   }
+  console.log(playerCards, dealerCards)
+  console.log(player.points,dealerPoints)
   break
 }
 
