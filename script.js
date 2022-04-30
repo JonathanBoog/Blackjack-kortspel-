@@ -15,6 +15,7 @@ let doubledownButton = document.getElementById("button-3-container");
 let standButton = document.getElementById("button-4-container");
 
 let playerCardImage = document.getElementById("player-card-container");
+let dealerCardImage = document.getElementById("dealer-card-container")
 
 
 // Klass för att skapa spelkort
@@ -71,6 +72,7 @@ function hit() {
 function doubleDown() {
   player.chips -= player.bet;
   player.bet = player.bet * 2;
+  showingButtons()
 }
 
 function stand() {
@@ -78,6 +80,7 @@ function stand() {
   hitButton.innerHTML = `<img src=""/>`;
   doubledownButton.innerHTML = `<img src=""/>`;
   splitButton.innerHTML = `<img src=""/>`;
+
 }
 
 function split() {
@@ -98,6 +101,7 @@ function split() {
       hitButton = `<img src="./images/hitbutton.png"/>`;
       standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     }
+    
   }
   
   // Summera handen för playerCards
@@ -147,7 +151,7 @@ function startOfGame(){
 
 
   //bet = Number(prompt('Vad är ditt bet?'))
-  bet = 100;
+  bet = 100
   player.chips -= bet
   player.bet = bet
   
@@ -161,7 +165,7 @@ function startOfGame(){
   playerCards.push(currentCard)
 
   currentCard = kortlek.dra_kort();
-  //cardImage.innerHTML = `<img src="./images/${currentImage}" />`;
+  dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
   dealerCards.push(currentCard)
 
   currentCard = kortlek.dra_kort();
@@ -169,14 +173,14 @@ function startOfGame(){
   playerCards.push(currentCard)
 
   currentCard = kortlek.dra_kort();
-  //cardImage.innerHTML = `<img src="./images/${currentImage}" />`;
+  dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
   dealerCards.push(currentCard)
 
   for (i in playerCards){
     player.points += playerCards[i].value;
   }
-  for (char in dealerCards){
-    dealerPoints += dealerCards[i].value;
+  for (j in dealerCards){
+    dealerPoints += dealerCards[j].value;
   }
   
   if (player.points === 21 && dealerPoints === 21){
@@ -187,7 +191,6 @@ function startOfGame(){
     //Alla kort visas
     alert('Du fick BLACKJACK')
     player.chips += 2.5*bet
-    console.log(player.chips)
     return ''
   } else if (dealerPoints === 21) {
     //Alla kort visas
@@ -199,13 +202,13 @@ function startOfGame(){
 }
 
 function showingButtons (){
-    if (true) {
+    if (canSplit) {
       // här läggs knapparna split, hit, stand och double down till
       standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
       hitButton.innerHTML = `<img src="./images/hitbutton.png"/>`;
       doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
       splitButton.innerHTML = `<img src="./images/splitbutton.png"/>`;
-      console.log(player.points, dealerPoints)
+
     } else if (canDoubleDown()) {
       doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
       hitButton = `<img src="./images/hitbutton.png"/>`;
@@ -216,12 +219,12 @@ function showingButtons (){
     }
     if (player.points > 21 ){
       alert('Bust')
-      return''
+      //startOfGame()
     }
     
 
   }
-let dealerPoints
+let dealerPoints;
 startOfGame()
 // Alla knappar och dess funktioner
 splitButton.addEventListener("click", split)
