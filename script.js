@@ -148,6 +148,7 @@ function startOfGame(){
     return ''
   }
   player.points = 0;
+  alert('välkommen')
 
 
   //bet = Number(prompt('Vad är ditt bet?'))
@@ -219,7 +220,7 @@ function showingButtons (){
     }
     if (player.points > 21 ){
       alert('Bust')
-      //startOfGame()
+      startOfGame()
     }
     
 
