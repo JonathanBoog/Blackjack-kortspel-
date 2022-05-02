@@ -80,7 +80,51 @@ function stand() {
   hitButton.innerHTML = `<img src=""/>`;
   doubledownButton.innerHTML = `<img src=""/>`;
   splitButton.innerHTML = `<img src=""/>`;
+  
+  //Dealer kort
+  dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
+  dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
 
+
+
+  while (true){
+    if (dealerValues() <17 ){
+      currentCard = kortlek.dra_kort();
+      dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+      dealerCards.push(currentCard);
+    } else if (dealerValues() >= 21){
+      console.log('Dealer fick över 21')
+      return''
+    } else {
+        if (player.points === dealerPoints){
+          console.log('Push')
+          return ''
+        } else if (player.points > dealerPoints){
+          console.log('Du vann')
+          player.chips += 2*bet
+          return ''
+        } else if (player.points < dealerPoints ) {
+          console.log('Dealer vann')
+          return ''
+        }
+    }
+  }
+}
+
+function dealerValues(){
+  dealerPoints = 0
+  for (j in dealerCards){
+    dealerPoints += dealerCards[j].value;
+  }
+  return dealerPoints
+}
+
+function playerValues(){
+  player.points = 0
+  for (j in playerCards){
+    player.points += playerCards[j].value;
+  }
+  return player.points
 }
 
 function split() {
@@ -147,7 +191,7 @@ function startOfGame(){
     console.log('Spelet avslutas')
     return ''
   }
-  player.points = 0;
+  
   alert('välkommen')
 
 
@@ -159,14 +203,15 @@ function startOfGame(){
   kortlek.blanda();
   playerCards = [];
   dealerCards = [];
-  dealerPoints = 0;
+  player.points = 0;
 
   currentCard = kortlek.dra_kort();
   playerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
   playerCards.push(currentCard)
 
   currentCard = kortlek.dra_kort();
-  dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+  dealerCard1 = currentCard;
+  dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/kort_baksida.png"/>`;
   dealerCards.push(currentCard)
 
   currentCard = kortlek.dra_kort();
@@ -174,28 +219,30 @@ function startOfGame(){
   playerCards.push(currentCard)
 
   currentCard = kortlek.dra_kort();
+  dealerCard2 = currentCard;
   dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
   dealerCards.push(currentCard)
 
   for (i in playerCards){
     player.points += playerCards[i].value;
   }
-  for (j in dealerCards){
-    dealerPoints += dealerCards[j].value;
-  }
+  dealerValues();
   
   if (player.points === 21 && dealerPoints === 21){
-    alert('Push')
-    //Alla kort visas
+    console.log('Push')
+    dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
+    dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
     return ''
   } else if (player.points === 21){
-    //Alla kort visas
-    alert('Du fick BLACKJACK')
+    dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
+    dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
+    console.log('Du fick BLACKJACK')
     player.chips += 2.5*bet
     return ''
   } else if (dealerPoints === 21) {
-    //Alla kort visas
-    alert('Dealern fick BLACKJACK')
+    dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
+    dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
+    console.log('Dealern fick BLACKJACK')
     return ''
   }
   
@@ -203,29 +250,43 @@ function startOfGame(){
 }
 
 function showingButtons (){
-    if (canSplit) {
-      // här läggs knapparna split, hit, stand och double down till
-      standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
-      hitButton.innerHTML = `<img src="./images/hitbutton.png"/>`;
-      doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
-      splitButton.innerHTML = `<img src="./images/splitbutton.png"/>`;
+  if (canSplit) {
+    // här läggs knapparna split, hit, stand och double down till
+    standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
+    hitButton.innerHTML = `<img src="./images/hitbutton.png"/>`;
+    doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
+    splitButton.innerHTML = `<img src="./images/splitbutton.png"/>`;
 
-    } else if (canDoubleDown()) {
-      doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
-      hitButton = `<img src="./images/hitbutton.png"/>`;
-      standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
+  } else if (canDoubleDown()) {
+    doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
+    hitButton = `<img src="./images/hitbutton.png"/>`;
+    standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     } else {
-      hitButton = `<img src="./images/hitbutton.png"/>`;
-      standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
+    hitButton = `<img src="./images/hitbutton.png"/>`;
+    standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     }
-    if (player.points > 21 ){
-      alert('Bust')
-      startOfGame()
+  if (player.points > 21 ){
+    for (i in playerCards){
+      if (playerCards[i].value === 11){
+        playerCards[i].value = 1;
+        playerValues();
+        if (player.points <= 21){
+          break;
+        }
+      }
     }
-    
-
   }
+  if (player.points > 21 ){
+    console.log('Bust')
+    startOfGame()
+    }
+}
+let playerCards;
+let dealerCards;
 let dealerPoints;
+let dealerCard1;
+let dealerCard2;
+
 startOfGame()
 // Alla knappar och dess funktioner
 splitButton.addEventListener("click", split)
