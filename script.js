@@ -92,9 +92,21 @@ function stand() {
       currentCard = kortlek.dra_kort();
       dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
       dealerCards.push(currentCard);
-    } else if (dealerValues() >= 21){
-      console.log('Dealer fick över 21')
-      return''
+    } else if (dealerValues() > 21){
+        for (i in dealerCards){
+          if (dealerCards[i].value === 11){
+            dealerCards[i].value = 1;
+            dealerValues();
+            if (dealerPoints <= 21){
+              break;
+            }
+          }
+        }
+      if (dealerValues() > 21){
+        console.log('Dealer fick över 21');
+        return''
+      }
+      
     } else {
         if (player.points === dealerPoints){
           console.log('Push')
