@@ -116,3 +116,15 @@ body {
   height: 15%;
 
 }
+
+#coinmoderater-container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  bottom: 10%;
+  right: 0%;
+  width: 10%;
+  height: 5%;
+  font-size: 36px;
+}
+

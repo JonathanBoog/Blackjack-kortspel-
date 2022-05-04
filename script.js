@@ -1,14 +1,43 @@
  //Background:
 
-document.body.style.backgroundImage = "url('./images/Background.png')";
-
+document.body.style.backgroundImage = "url('./images/bakgrunds_bild.png')";
+document.body.style.backgroundSize = "cover"
+document.body.style.backgroundRepeat = "no-repeat"
 
 // En klass för spelaren
 let player = {
   chips: 1000,  // Antal pengar
   bet: 0, // Antal satsade pengar
   points: 0, // Antal poäng
+
+  betcoins() {
+    let inputValue = document.getElementById("coinsbetted").value;
+    if (inputValue > player.chips) {
+      coinsystem.innerHTML = "<p>Invalid amount of coins</p>"
+    } else {
+      player.chips -= inputValue
+      return inputvalue
+    }
+  }
 }
+
+function betting(){
+  player.bet = 100
+  while (true){
+    if(player.bet > player.chips){
+      alert('Du betta för mycket')
+      continue
+      
+    } else {
+      player.chips -= player.bet
+    
+      break;
+      
+    }
+  }  
+}
+
+
 let hitButton = document.getElementById("button-1-container");
 let splitButton = document.getElementById("button-2-container");
 let doubledownButton = document.getElementById("button-3-container");
@@ -17,6 +46,7 @@ let standButton = document.getElementById("button-4-container");
 let playerCardImage = document.getElementById("player-card-container");
 let dealerCardImage = document.getElementById("dealer-card-container")
 
+let coinsystem = document.getElementById("coinmoderater-container");
 
 // Klass för att skapa spelkort
 class Kort {
@@ -81,44 +111,47 @@ function stand() {
   doubledownButton.innerHTML = `<img src=""/>`;
   splitButton.innerHTML = `<img src=""/>`;
   
+
+  
   //Dealer kort
   dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
   dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
 
 
-
-  while (true){
-    if (dealerValues() <17 ){
-      currentCard = kortlek.dra_kort();
-      dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-      dealerCards.push(currentCard);
-    } else if (dealerValues() > 21){
-        for (i in dealerCards){
-          if (dealerCards[i].value === 11){
-            dealerCards[i].value = 1;
-            dealerValues();
-            if (dealerPoints <= 21){
-              break;
+  if(secondHand) {
+    while (true){
+      if (dealerValues() <17 ){
+        currentCard = kortlek.dra_kort();
+        dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+        dealerCards.push(currentCard);
+      } else if (dealerValues() > 21){
+          for (i in dealerCards){
+            if (dealerCards[i].value === 11){
+              dealerCards[i].value = 1;
+              dealerValues();
+              if (dealerPoints <= 21){
+                break;
+              }
             }
           }
+        if (dealerValues() > 21){
+          console.log('Dealer fick över 21');
+          return''
         }
-      if (dealerValues() > 21){
-        console.log('Dealer fick över 21');
-        return''
-      }
       
-    } else {
-        if (player.points === dealerPoints){
-          console.log('Push')
-          return ''
-        } else if (player.points > dealerPoints){
-          console.log('Du vann')
-          player.chips += 2*bet
-          return ''
-        } else if (player.points < dealerPoints ) {
-          console.log('Dealer vann')
-          return ''
-        }
+      } else {
+          if (player.points === dealerPoints){
+            console.log('Push')
+            return ''
+          } else if (player.points > dealerPoints){
+            console.log('Du vann')
+            player.chips += 2*bet
+            return ''
+          } else if (player.points < dealerPoints ) {
+            console.log('Dealer vann')
+            return ''
+          }
+      }
     }
   }
 }
@@ -140,7 +173,14 @@ function playerValues(){
 }
 
 function split() {
+  console.log('funktion split')
+  hasSplit = true;
+
   let tempHand = [];
+  let handAValue = 0;
+  let handBValue = 0;
+
+  // Fördelar om korten till den temporära handen.
   tempHand.push(playerCards[1]);
   playerCards.pop()
   currentCard = kortlek.dra_kort();
@@ -148,24 +188,30 @@ function split() {
   currentCard = kortlek.dra_kort();
   playerCards.push(currentCard)
   
-  while (true) {
-    if (canDoubleDown()) {
-      doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
-      hitButton = `<img src="./images/hitbutton.png"/>`;
-      standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
-    } else {
-      hitButton = `<img src="./images/hitbutton.png"/>`;
-      standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
-    }
-    
-  }
-  
-  // Summera handen för playerCards
+  secondHand = false;
+  // Kör igenom första handen
+  showingButtons();
+
+  // Summera handen
+  handAValue = playerValues();
+
+  // Byt plats på tempHand och playerCards
+  playerCards = tempHand;
+
+  secondHand = true;
+  // Loop för andra
+  showingButtons();
+
+  // Summera handen
+  handBValue = playerValues();
+
 }
 
 function canSplit() {
-  if (playerCards[0].value == playerCards[1].value && playerCards.length == 2) {
+  if ((playerCards[0].value == playerCards[1].value) && (playerCards.length == 2) && (hasSplit === false)) {
     return true;
+  } else {
+    return false;
   }
 }
 
@@ -198,6 +244,8 @@ for (let j = 0; j < 6; j++) {
 
 }
 
+
+
 function startOfGame(){
   if (kortlek.length===26){
     console.log('Spelet avslutas')
@@ -206,11 +254,8 @@ function startOfGame(){
   
   alert('välkommen')
 
-
-  //bet = Number(prompt('Vad är ditt bet?'))
-  bet = 100
-  player.chips -= bet
-  player.bet = bet
+  player.bet = 100
+  player.chips -= player.bet
   
   kortlek.blanda();
   playerCards = [];
@@ -262,7 +307,7 @@ function startOfGame(){
 }
 
 function showingButtons (){
-  if (canSplit) {
+  if (canSplit()) {
     // här läggs knapparna split, hit, stand och double down till
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     hitButton.innerHTML = `<img src="./images/hitbutton.png"/>`;
@@ -270,8 +315,9 @@ function showingButtons (){
     splitButton.innerHTML = `<img src="./images/splitbutton.png"/>`;
 
   } else if (canDoubleDown()) {
+    hitButton.innerHTML = `<img src="./images/hitbutton.png"/>`;
     doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
-    hitButton = `<img src="./images/hitbutton.png"/>`;
+    
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     } else {
     hitButton = `<img src="./images/hitbutton.png"/>`;
@@ -289,7 +335,7 @@ function showingButtons (){
     }
   }
   if (player.points > 21 ){
-    console.log('Bust')
+    console.log('Bust a nut')
     startOfGame()
     }
 }
@@ -298,6 +344,10 @@ let dealerCards;
 let dealerPoints;
 let dealerCard1;
 let dealerCard2;
+
+// Om man har splittat
+let hasSplit = false;
+let secondHand = true;
 
 startOfGame()
 // Alla knappar och dess funktioner
