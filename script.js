@@ -221,42 +221,45 @@ function canDoubleDown() {
   }
 }
 
-let kortlek = new Kortlek();
-for (let j = 0; j < 6; j++) {
-  for (let i = 2; i <= 14; i++){
-      if (i == 14) {
-          cardvalue = 11;
-      } else if ( i > 10) {
-          cardvalue = 10;
-      } else {
-          cardvalue = i;
-      }
-      let kort = new Kort(`${i}_of_clubs`, cardvalue);
-      kortlek.lägg_till_kort(kort);
-      kort = new Kort(`${i}_of_diamonds`, cardvalue);
-      kortlek.lägg_till_kort(kort);
-      kort = new Kort(`${i}_of_diamonds`,cardvalue);
-      kortlek.lägg_till_kort(kort);
-      kort = new Kort(`${i}_of_spades`, cardvalue);
-      kortlek.lägg_till_kort(kort);
-      
-  }
 
+function nyKortlek(){
+  for (let j = 0; j < 6; j++) {
+    for (let i = 2; i <= 14; i++){
+        if (i == 14) {
+            cardvalue = 11;
+        } else if ( i > 10) {
+            cardvalue = 10;
+        } else {
+            cardvalue = i;
+        }
+        let kort = new Kort(`${i}_of_clubs`, cardvalue);
+        kortlek.lägg_till_kort(kort);
+        kort = new Kort(`${i}_of_diamonds`, cardvalue);
+        kortlek.lägg_till_kort(kort);
+        kort = new Kort(`${i}_of_diamonds`,cardvalue);
+        kortlek.lägg_till_kort(kort);
+        kort = new Kort(`${i}_of_spades`, cardvalue);
+        kortlek.lägg_till_kort(kort);
+        
+    }
+  }
+}
+
+function startMenu(){
+
+  if (kortlek.length<26){
+    nyKortlek
+  }
+  alert('välkommen');
+  //player.betting();
+  player.bet = 100;
+  player.chips -= player.bet;
+  startOfGame()
 }
 
 
-
 function startOfGame(){
-  if (kortlek.length===26){
-    console.log('Spelet avslutas')
-    return ''
-  }
-  
-  alert('välkommen')
 
-  player.bet = 100
-  player.chips -= player.bet
-  
   kortlek.blanda();
   playerCards = [];
   dealerCards = [];
@@ -336,9 +339,10 @@ function showingButtons (){
   }
   if (player.points > 21 ){
     console.log('Bust a nut')
-    startOfGame()
+    startMenu()
     }
 }
+let kortlek = new Kortlek();
 let playerCards;
 let dealerCards;
 let dealerPoints;
@@ -349,7 +353,7 @@ let dealerCard2;
 let hasSplit = false;
 let secondHand = true;
 
-startOfGame()
+startMenu()
 // Alla knappar och dess funktioner
 splitButton.addEventListener("click", split)
 hitButton.addEventListener("click", hit)
