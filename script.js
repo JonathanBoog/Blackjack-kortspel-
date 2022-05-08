@@ -223,6 +223,7 @@ function canDoubleDown() {
 
 
 function nyKortlek(){
+  
   for (let j = 0; j < 6; j++) {
     for (let i = 2; i <= 14; i++){
         if (i == 14) {
@@ -247,10 +248,7 @@ function nyKortlek(){
 
 function startMenu(){
 
-  if (kortlek.length<26){
-    nyKortlek
-  }
-  alert('välkommen');
+  console.log('välkommen');
   //player.betting();
   player.bet = 100;
   player.chips -= player.bet;
@@ -343,6 +341,7 @@ function showingButtons (){
     }
 }
 let kortlek = new Kortlek();
+nyKortlek();
 let playerCards;
 let dealerCards;
 let dealerPoints;
