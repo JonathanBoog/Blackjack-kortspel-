@@ -48,6 +48,8 @@ let dealerCardImage = document.getElementById("dealer-card-container")
 
 let coinsystem = document.getElementById("coinmoderater-container");
 
+let victoryText = document.getElementById("header-text");
+
 // Klass för att skapa spelkort
 class Kort {
     constructor(bild, value) {
@@ -135,20 +137,21 @@ function stand() {
             }
           }
         if (dealerValues() > 21){
-          console.log('Dealer fick över 21');
+          victoryText.innerHTML ='Dealer fick över 21';
           return''
         }
       
       } else {
           if (player.points === dealerPoints){
-            console.log('Push')
+            victoryText.innerHTML = 'Push'
+            
             return ''
           } else if (player.points > dealerPoints){
-            console.log('Du vann')
+            victoryText.innerHTML ='Du vann'
             player.chips += 2*bet
             return ''
           } else if (player.points < dealerPoints ) {
-            console.log('Dealer vann')
+            victoryText.innerHTML ='Dealer vann'
             return ''
           }
       }
@@ -247,8 +250,7 @@ function nyKortlek(){
 }
 
 function startMenu(){
-
-  console.log('välkommen');
+  victoryText.innerHTML = 'Välkommen'
   //player.betting();
   player.bet = 100;
   player.chips -= player.bet;
@@ -257,7 +259,8 @@ function startMenu(){
 
 
 function startOfGame(){
-
+  
+  //victoryText.innerHTML = ""
   kortlek.blanda();
   playerCards = [];
   dealerCards = [];
@@ -287,20 +290,20 @@ function startOfGame(){
   dealerValues();
   
   if (player.points === 21 && dealerPoints === 21){
-    console.log('Push')
+    victoryText.innerHTML ='Push'
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
     return ''
   } else if (player.points === 21){
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
-    console.log('Du fick BLACKJACK')
+    victoryText.innerHTML ='Du fick BLACKJACK'
     player.chips += 2.5*bet
     return ''
   } else if (dealerPoints === 21) {
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
-    console.log('Dealern fick BLACKJACK')
+    victoryText.innerHTML ='Dealern fick BLACKJACK'
     return ''
   }
   
@@ -336,8 +339,8 @@ function showingButtons (){
     }
   }
   if (player.points > 21 ){
-    console.log('Bust a nut')
-    startMenu()
+    victoryText.innerHTML ='Bust a nut'
+    //startMenu()
     }
 }
 let kortlek = new Kortlek();
