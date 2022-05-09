@@ -340,6 +340,11 @@ function showingButtons (){
   }
   if (player.points > 21 ){
     victoryText.innerHTML ='Bust a nut'
+    standButton.innerHTML = `<img src=""/>`;
+    hitButton.innerHTML = `<img src=""/>`;
+    doubledownButton.innerHTML = `<img src=""/>`;
+    splitButton.innerHTML = `<img src=""/>`;
+  
     //startMenu()
     }
 }
