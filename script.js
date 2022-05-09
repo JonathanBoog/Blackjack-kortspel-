@@ -11,12 +11,14 @@ let player = {
   points: 0, // Antal poäng
 
   betcoins() {
-    let inputValue = document.getElementById("coinsbetted").value;
-    if (inputValue > player.chips) {
+    inputValue = document.getElementById("coinsbetted").value;
+    console.log(inputValue)
+    if (inputValue > this.chips) {
       coinsystem.innerHTML = "<p>Invalid amount of coins</p>"
     } else {
-      player.chips -= inputValue
-      return inputvalue
+      this.chips -= inputValue
+      this.bet = inputValue
+      return inputValue
     }
   }
 }
@@ -112,7 +114,6 @@ function stand() {
   hitButton.innerHTML = `<img src=""/>`;
   doubledownButton.innerHTML = `<img src=""/>`;
   splitButton.innerHTML = `<img src=""/>`;
-  
 
   
   //Dealer kort
@@ -126,6 +127,7 @@ function stand() {
         currentCard = kortlek.dra_kort();
         dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
         dealerCards.push(currentCard);
+     
       } else if (dealerValues() > 21){
           for (i in dealerCards){
             if (dealerCards[i].value === 11){
@@ -148,7 +150,7 @@ function stand() {
             return ''
           } else if (player.points > dealerPoints){
             victoryText.innerHTML ='Du vann'
-            player.chips += 2*bet
+            player.chips += 2*player.bet
             return ''
           } else if (player.points < dealerPoints ) {
             victoryText.innerHTML ='Dealer vann'
@@ -251,16 +253,16 @@ function nyKortlek(){
 
 function startMenu(){
   victoryText.innerHTML = 'Välkommen'
-  //player.betting();
-  player.bet = 100;
-  player.chips -= player.bet;
+  //player.betcoins();
+  player.bet = 100
+  player.chips -= player.bet
   startOfGame()
 }
 
 
 function startOfGame(){
   
-  //victoryText.innerHTML = ""
+  victoryText.innerHTML = ""
   kortlek.blanda();
   playerCards = [];
   dealerCards = [];
@@ -313,17 +315,19 @@ function startOfGame(){
 function showingButtons (){
   if (canSplit()) {
     // här läggs knapparna split, hit, stand och double down till
+
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     hitButton.innerHTML = `<img src="./images/hitbutton.png"/>`;
     doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
     splitButton.innerHTML = `<img src="./images/splitbutton.png"/>`;
 
   } else if (canDoubleDown()) {
+
     hitButton.innerHTML = `<img src="./images/hitbutton.png"/>`;
     doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
-    
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     } else {
+
     hitButton = `<img src="./images/hitbutton.png"/>`;
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     }
@@ -339,12 +343,13 @@ function showingButtons (){
     }
   }
   if (player.points > 21 ){
-    victoryText.innerHTML ='Bust a nut'
-    standButton.innerHTML = `<img src=""/>`;
+    victoryText.innerHTML ='Bust a nut';
     hitButton.innerHTML = `<img src=""/>`;
+    standButton.innerHTML = `<img src=""/>`;
+    
     doubledownButton.innerHTML = `<img src=""/>`;
     splitButton.innerHTML = `<img src=""/>`;
-  
+
     //startMenu()
     }
 }
