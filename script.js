@@ -137,7 +137,7 @@ function stand() {
             }
           }
         if (dealerValues() > 21){
-          victoryText.innerHTML ='Dealer fick över 21';
+          victoryText.innerHTML ='Du vann';
           return''
         }
       
