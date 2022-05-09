@@ -140,6 +140,7 @@ function stand() {
           }
         if (dealerValues() > 21){
           victoryText.innerHTML ='Du vann';
+          player.chips += 2*player.bet
           return''
         }
       
@@ -300,7 +301,7 @@ function startOfGame(){
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
     victoryText.innerHTML ='Du fick BLACKJACK'
-    player.chips += 2.5*bet
+    player.chips += 2.5*player.bet
     return ''
   } else if (dealerPoints === 21) {
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
@@ -313,7 +314,29 @@ function startOfGame(){
 }
 
 function showingButtons (){
-  if (canSplit()) {
+  if (player.points > 21 ){
+    for (i in playerCards){
+      if (playerCards[i].value === 11){
+        playerCards[i].value = 1;
+        playerValues();
+        if (player.points <= 21){
+          break;
+        }
+      }
+    }
+  }
+
+  if (player.points > 21 ){
+    victoryText.innerHTML ='Bust a nut';
+
+    standButton.innerHTML = `<img src=""/>`;
+    
+    doubledownButton.innerHTML = `<img src=""/>`;
+    splitButton.innerHTML = `<img src=""/>`;
+    hitButton.innerHTML = `<img src=""/>`;
+    //startMenu()
+    }
+  else if (canSplit()) {
     // här läggs knapparna split, hit, stand och double down till
 
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
@@ -331,27 +354,7 @@ function showingButtons (){
     hitButton = `<img src="./images/hitbutton.png"/>`;
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     }
-  if (player.points > 21 ){
-    for (i in playerCards){
-      if (playerCards[i].value === 11){
-        playerCards[i].value = 1;
-        playerValues();
-        if (player.points <= 21){
-          break;
-        }
-      }
-    }
-  }
-  if (player.points > 21 ){
-    victoryText.innerHTML ='Bust a nut';
-    hitButton.innerHTML = `<img src=""/>`;
-    standButton.innerHTML = `<img src=""/>`;
-    
-    doubledownButton.innerHTML = `<img src=""/>`;
-    splitButton.innerHTML = `<img src=""/>`;
-
-    //startMenu()
-    }
+  
 }
 let kortlek = new Kortlek();
 nyKortlek();
