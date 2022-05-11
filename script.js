@@ -12,9 +12,13 @@ let standButton = document.getElementById("button-4-container");
 let playerCardImage = document.getElementById("player-card-container");
 let dealerCardImage = document.getElementById("dealer-card-container")
 
-let coinsystem = document.getElementById("coinmoderater-container");
 
 let victoryText = document.getElementById("header-text");
+let betAmount = document.getElementById("bet-text");
+let amountChips = document.getElementById("amount-chips");
+let startDealing = document.getElementById("start-button-container");
+let continueButton = document.getElementById("continue-button-container");
+
 
 let betting1 = document.getElementById("button-betting1-container");
 let betting2 = document.getElementById("button-betting2-container");
@@ -23,6 +27,7 @@ let betting4 = document.getElementById("button-betting4-container");
 
 let handAContainer = document.getElementById("handA-container");
 let handBContainer = document.getElementById("handB-container");
+
 
 // En klass för spelaren
 let player = {
@@ -46,12 +51,16 @@ function bet1(){
   if(player.chips >= 50){
     player.bet += 50
     player.chips -=50
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`
+    amountChips.innerHTML = `Antal chips: ${player.chips}`
   }
 }
 function bet2(){
   if(player.chips >= 100){
     player.bet += 100
     player.chips -=100
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`
+    amountChips.innerHTML = `Antal chips: ${player.chips}`
   }
 }
 
@@ -59,6 +68,8 @@ function bet3(){
   if(player.chips >= 500){
     player.bet += 500
     player.chips -=500
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`
+    amountChips.innerHTML = `Antal chips: ${player.chips}`
   }
 }
 
@@ -66,14 +77,16 @@ function bet4(){
   if(player.chips >= 1000){
     player.bet += 1000
     player.chips -=1000
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`
+    amountChips.innerHTML = `Antal chips: ${player.chips}`
   }
 }
 
 function betting(){
-  betting1.innerHTML = `<img src="./images/${chips50}.png"/>`;
-  betting2.innerHTML = `<img src="./images/${chips100}.png"/>`;
-  betting3.innerHTML = `<img src="./images/${chips500}.png"/>`;
-  betting4.innerHTML = `<img src="./images/${chips1000}.png"/>`;
+  betting1.innerHTML = `<img src="./images/chips50.png"/>`;
+  betting2.innerHTML = `<img src="./images/chips100.png"/>`;
+  betting3.innerHTML = `<img src="./images/chips500.png"/>`;
+  betting4.innerHTML = `<img src="./images/chips1000.png"/>`;
 
 }
 
@@ -122,7 +135,7 @@ class Kort {
   
 function hit() {
   if (hasSplit) {
-    if (secondhand === false) {
+    if (secondHand === false) {
       currentCard = kortlek.dra_kort();
       handAContainer.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
       playerCards.push(currentCard)
@@ -145,6 +158,7 @@ function hit() {
 function doubleDown() {
   player.chips -= player.bet;
   player.bet = player.bet * 2;
+
   showingButtons()
 }
 
@@ -177,25 +191,29 @@ function stand() {
             }
           }
         if (bust = true){
+          continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
           return ''
         }
         if (dealerValues() > 21){
-          victoryText.innerHTML =`$${2*player.bet}`;
+          victoryText.innerHTML =`Du vann $${2*player.bet}`;
           player.chips += 2*player.bet
+          continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
           return''
         }
       
       } else {
           if (player.points === dealerPoints){
             victoryText.innerHTML = 'Push'
-            
+            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
             return ''
           } else if (player.points > dealerPoints){
-            victoryText.innerHTML =`$${2*player.bet}`
+            victoryText.innerHTML =`Du vann $${2*player.bet}`
             player.chips += 2*player.bet
+            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
             return ''
           } else if (player.points < dealerPoints ) {
             victoryText.innerHTML ='Dealer vann'
+            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
             return ''
           }
       }
@@ -305,21 +323,29 @@ function nyKortlek(){
 }
 
 function startMenu(){
-  victoryText.innerHTML = 'Välkommen'
+  continueButton.innerHTML =""
+
+  player.bet = 0;
+  player.points = 0;
+  startDealing.innerHTML = `<img src="./images/Start-Button.png"/>`;
+  betAmount.innerHTML = `Ditt bet: ${player.bet}`;
+  amountChips.innerHTML = `Antal chips: ${player.chips}`;
+  victoryText.innerHTML = "";
+  standButton.innerHTML = "";
+  hitButton.innerHTML = "";
+  doubledownButton.innerHTML = "";
+  splitButton.innerHTML = "";
+  
   betting()
-  //player.bet = 100
-  //player.chips -= player.bet
-  //startOfGame()
 }
 
 
 function startOfGame(){
-  
-  victoryText.innerHTML = ""
+  startDealing.innerHTML = ""
+  amountChips.innerHTML = ""
   kortlek.blanda();
   playerCards = [];
   dealerCards = [];
-  player.points = 0;
 
   currentCard = kortlek.dra_kort();
   playerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
@@ -348,17 +374,20 @@ function startOfGame(){
     victoryText.innerHTML ='Push'
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
+    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
     return ''
   } else if (player.points === 21){
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
-    victoryText.innerHTML =`$${2.5*player.bet}`
+    victoryText.innerHTML =`Du vann $${2.5*player.bet}`
+    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
     player.chips += 2.5*player.bet
     return ''
   } else if (dealerPoints === 21) {
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
     victoryText.innerHTML ='Dealern fick BLACKJACK'
+    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
     return ''
   }
   
@@ -366,6 +395,8 @@ function startOfGame(){
 }
 
 function showingButtons (){
+  betAmount.innerHTML = `Ditt bet: ${player.bet}`
+  amountChips.innerHTML = `Antal chips: ${player.chips}`
   if (player.points > 21 ){
     for (i in playerCards){
       if (playerCards[i].value === 11){
@@ -388,7 +419,7 @@ function showingButtons (){
     hitButton.innerHTML = `<img src=""/>`;
     bust = true
     stand()
-    //startMenu()
+    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
     }
   else if (canSplit()) {
     // här läggs knapparna split, hit, stand och double down till
@@ -428,6 +459,7 @@ let bust = false;
 startMenu()
 
 
+
 // Alla knappar och dess funktioner
 splitButton.addEventListener("click", split)
 hitButton.addEventListener("click", hit)
@@ -438,4 +470,7 @@ betting1.addEventListener("click", bet1)
 betting2.addEventListener("click", bet2)
 betting3.addEventListener("click", bet3)
 betting4.addEventListener("click", bet4)
+
+startDealing.addEventListener("click", startOfGame)
+continueButton.addEventListener("click",startMenu)
 
