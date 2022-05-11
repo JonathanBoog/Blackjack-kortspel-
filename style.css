@@ -117,7 +117,7 @@ body {
 
 }
 
-#coinmoderater-container {
+#bettingmoderater-container {
   position: fixed;
   display: flex;
   justify-content: center;
@@ -128,3 +128,64 @@ body {
   font-size: 36px;
 }
 
+#button-betting1-container {
+	/*Rutan som knapparna visas i*/
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+  width: 20%;
+  height: 20%;
+}
+
+#button-betting2-container {
+	/*Rutan som knapparna visas i*/
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+  width: 20%;
+  height: 20%;
+}
+
+#button-betting3-container {
+	/*Rutan som knapparna visas i*/
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+  width: 20%;
+  height: 20%;
+}
+
+#button-betting4-container {
+	/*Rutan som knapparna visas i*/
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+  width: 20%;
+  height: 20%;
+}
+
+#handA-container {
+  position: fixed;
+	display: flex;
+	justify-content: left; /* Centering i kolumnen, dvs vertikalt */
+  bottom: 30%; 
+  left: 25%;
+  width: 15%;
+  height: 15%;
+  border: solid;
+  border-width: 10px;
+  border-color: rgb(255, 230, 0);
+}
+
+#handB-container {
+  position: fixed;
+	display: flex;
+	justify-content: right; /* Centering i kolumnen, dvs vertikalt */
+  bottom: 30%; 
+  right: 25%;
+  width: 15%;
+  height: 15%;
+  border: solid;
+  border-width: 10px;
+  border-color: rgb(255, 0, 217);
+}

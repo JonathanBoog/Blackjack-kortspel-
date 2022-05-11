@@ -1,8 +1,28 @@
- //Background:
+  //Background:
 
 document.body.style.backgroundImage = "url('./images/bakgrunds_bild.png')";
 document.body.style.backgroundSize = "cover"
 document.body.style.backgroundRepeat = "no-repeat"
+
+let hitButton = document.getElementById("button-1-container");
+let splitButton = document.getElementById("button-2-container");
+let doubledownButton = document.getElementById("button-3-container");
+let standButton = document.getElementById("button-4-container");
+
+let playerCardImage = document.getElementById("player-card-container");
+let dealerCardImage = document.getElementById("dealer-card-container")
+
+let coinsystem = document.getElementById("coinmoderater-container");
+
+let victoryText = document.getElementById("header-text");
+
+let betting1 = document.getElementById("button-betting1-container");
+let betting2 = document.getElementById("button-betting2-container");
+let betting3 = document.getElementById("button-betting3-container");
+let betting4 = document.getElementById("button-betting4-container");
+
+let handAContainer = document.getElementById("handA-container");
+let handBContainer = document.getElementById("handB-container");
 
 // En klass för spelaren
 let player = {
@@ -22,35 +42,40 @@ let player = {
     }
   }
 }
-
-function betting(){
-  player.bet = 100
-  while (true){
-    if(player.bet > player.chips){
-      alert('Du betta för mycket')
-      continue
-      
-    } else {
-      player.chips -= player.bet
-    
-      break;
-      
-    }
-  }  
+function bet1(){
+  if(player.chips >= 50){
+    player.bet += 50
+    player.chips -=50
+  }
+}
+function bet2(){
+  if(player.chips >= 100){
+    player.bet += 100
+    player.chips -=100
+  }
 }
 
+function bet3(){
+  if(player.chips >= 500){
+    player.bet += 500
+    player.chips -=500
+  }
+}
 
-let hitButton = document.getElementById("button-1-container");
-let splitButton = document.getElementById("button-2-container");
-let doubledownButton = document.getElementById("button-3-container");
-let standButton = document.getElementById("button-4-container");
+function bet4(){
+  if(player.chips >= 1000){
+    player.bet += 1000
+    player.chips -=1000
+  }
+}
 
-let playerCardImage = document.getElementById("player-card-container");
-let dealerCardImage = document.getElementById("dealer-card-container")
+function betting(){
+  betting1.innerHTML = `<img src="./images/${chips50}.png"/>`;
+  betting2.innerHTML = `<img src="./images/${chips100}.png"/>`;
+  betting3.innerHTML = `<img src="./images/${chips500}.png"/>`;
+  betting4.innerHTML = `<img src="./images/${chips1000}.png"/>`;
 
-let coinsystem = document.getElementById("coinmoderater-container");
-
-let victoryText = document.getElementById("header-text");
+}
 
 // Klass för att skapa spelkort
 class Kort {
@@ -96,10 +121,24 @@ class Kort {
   }
   
 function hit() {
-  currentCard = kortlek.dra_kort();
-  playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-  playerCards.push(currentCard)
-  player.points += currentCard.value
+  if (hasSplit) {
+    if (secondhand === false) {
+      currentCard = kortlek.dra_kort();
+      handAContainer.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+      playerCards.push(currentCard)
+      player.points += currentCard.value
+    } else {
+      currentCard = kortlek.dra_kort();
+      handBContainer.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+      playerCards.push(currentCard)
+      player.points += currentCard.value
+    }
+  } else {
+    currentCard = kortlek.dra_kort();
+    playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+    playerCards.push(currentCard)
+    player.points += currentCard.value
+  }
   showingButtons()
 }
 
@@ -114,7 +153,6 @@ function stand() {
   hitButton.innerHTML = `<img src=""/>`;
   doubledownButton.innerHTML = `<img src=""/>`;
   splitButton.innerHTML = `<img src=""/>`;
-
   
   //Dealer kort
   dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
@@ -138,8 +176,11 @@ function stand() {
               }
             }
           }
+        if (bust = true){
+          return ''
+        }
         if (dealerValues() > 21){
-          victoryText.innerHTML ='Du vann';
+          victoryText.innerHTML =`$${2*player.bet}`;
           player.chips += 2*player.bet
           return''
         }
@@ -150,7 +191,7 @@ function stand() {
             
             return ''
           } else if (player.points > dealerPoints){
-            victoryText.innerHTML ='Du vann'
+            victoryText.innerHTML =`$${2*player.bet}`
             player.chips += 2*player.bet
             return ''
           } else if (player.points < dealerPoints ) {
@@ -179,6 +220,7 @@ function playerValues(){
 }
 
 function split() {
+  playerCardImage.innerHTML = `<img src=""/>`;
   console.log('funktion split')
   hasSplit = true;
 
@@ -193,6 +235,14 @@ function split() {
   tempHand.push(currentCard)
   currentCard = kortlek.dra_kort();
   playerCards.push(currentCard)
+  
+  // Lägger in händerna i separata containers
+  handAContainer.innerHTML = `<img src="./PNG-cards-1.3/${playerCards[0].bild}.png"/>`;
+  handAContainer.innerHTML += `<img src="./PNG-cards-1.3/${playerCards[1].bild}.png"/>`;
+
+  handBContainer.innerHTML = `<img src="./PNG-cards-1.3/${tempHand[0].bild}.png"/>`;
+  handBContainer.innerHTML += `<img src="./PNG-cards-1.3/${tempHand[1].bild}.png"/>`;
+
   
   secondHand = false;
   // Kör igenom första handen
@@ -210,6 +260,8 @@ function split() {
 
   // Summera handen
   handBValue = playerValues();
+
+
 
 }
 
@@ -254,10 +306,10 @@ function nyKortlek(){
 
 function startMenu(){
   victoryText.innerHTML = 'Välkommen'
-  //player.betcoins();
-  player.bet = 100
-  player.chips -= player.bet
-  startOfGame()
+  betting()
+  //player.bet = 100
+  //player.chips -= player.bet
+  //startOfGame()
 }
 
 
@@ -300,7 +352,7 @@ function startOfGame(){
   } else if (player.points === 21){
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
-    victoryText.innerHTML ='Du fick BLACKJACK'
+    victoryText.innerHTML =`$${2.5*player.bet}`
     player.chips += 2.5*player.bet
     return ''
   } else if (dealerPoints === 21) {
@@ -327,13 +379,15 @@ function showingButtons (){
   }
 
   if (player.points > 21 ){
-    victoryText.innerHTML ='Bust a nut';
+    victoryText.innerHTML ='Bust';
 
     standButton.innerHTML = `<img src=""/>`;
     
     doubledownButton.innerHTML = `<img src=""/>`;
     splitButton.innerHTML = `<img src=""/>`;
     hitButton.innerHTML = `<img src=""/>`;
+    bust = true
+    stand()
     //startMenu()
     }
   else if (canSplit()) {
@@ -368,9 +422,20 @@ let dealerCard2;
 let hasSplit = false;
 let secondHand = true;
 
+let bust = false;
+
+
 startMenu()
+
+
 // Alla knappar och dess funktioner
 splitButton.addEventListener("click", split)
 hitButton.addEventListener("click", hit)
 standButton.addEventListener("click", stand)
 doubledownButton.addEventListener("click", doubleDown)
+
+betting1.addEventListener("click", bet1)
+betting2.addEventListener("click", bet2)
+betting3.addEventListener("click", bet3)
+betting4.addEventListener("click", bet4)
+
