@@ -156,10 +156,15 @@ function hit() {
 }
 
 function doubleDown() {
+
   player.chips -= player.bet;
   player.bet = player.bet * 2;
-
+  currentCard = kortlek.dra_kort();
+  playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+  playerCards.push(currentCard)
   showingButtons()
+  stand()
+
 }
 
 function stand() {
@@ -180,20 +185,23 @@ function stand() {
         dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
         dealerCards.push(currentCard);
      
-      } else if (dealerValues() > 21){
-          for (i in dealerCards){
-            if (dealerCards[i].value === 11){
-              dealerCards[i].value = 1;
-              dealerValues();
-              if (dealerPoints <= 21){
-                break;
-              }
+      } 
+      if (bust === true){
+        continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
+        return ''
+      }
+      if (dealerValues() > 21){
+        for (i in dealerCards){
+          if (dealerCards[i].value === 11){
+            dealerCards[i].value = 1;
+            dealerValues();
+            if (dealerPoints <= 21){
+              break;
+              
             }
           }
-        if (bust = true){
-          continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-          return ''
         }
+        
         if (dealerValues() > 21){
           victoryText.innerHTML =`Du vann $${2*player.bet}`;
           player.chips += 2*player.bet
@@ -223,8 +231,8 @@ function stand() {
 
 function dealerValues(){
   dealerPoints = 0
-  for (j in dealerCards){
-    dealerPoints += dealerCards[j].value;
+  for (b in dealerCards){
+    dealerPoints += dealerCards[b].value;
   }
   return dealerPoints
 }
@@ -292,7 +300,7 @@ function canSplit() {
 }
 
 function canDoubleDown() {
-  if (playerCards.length == 2) {
+  if (playerCards.length == 2 && player.chips/player.bet >= 2) {
     return true;
   }
 }
@@ -325,9 +333,16 @@ function nyKortlek(){
 function startMenu(){
   continueButton.innerHTML =""
 
+
   player.bet = 0;
   player.points = 0;
   startDealing.innerHTML = `<img src="./images/Start-Button.png"/>`;
+  
+  playerCardImage.innerHTML = "";
+  dealerCardImage.innerHTML = "";
+  handAContainer.innerHTML = "";
+  handBContainer.innerHTML = "";
+
   betAmount.innerHTML = `Ditt bet: ${player.bet}`;
   amountChips.innerHTML = `Antal chips: ${player.chips}`;
   victoryText.innerHTML = "";
@@ -341,8 +356,14 @@ function startMenu(){
 
 
 function startOfGame(){
-  startDealing.innerHTML = ""
-  amountChips.innerHTML = ""
+  startDealing.innerHTML = "";
+  amountChips.innerHTML = "";
+  betting1.innerHTML = "";
+  betting2.innerHTML = "";
+  betting3.innerHTML = "";
+  betting4.innerHTML = "";
+
+
   kortlek.blanda();
   playerCards = [];
   dealerCards = [];
@@ -396,7 +417,6 @@ function startOfGame(){
 
 function showingButtons (){
   betAmount.innerHTML = `Ditt bet: ${player.bet}`
-  amountChips.innerHTML = `Antal chips: ${player.chips}`
   if (player.points > 21 ){
     for (i in playerCards){
       if (playerCards[i].value === 11){
