@@ -456,7 +456,7 @@ function showingButtons (){
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     } else {
 
-    hitButton = `<img src="./images/hitbutton.png"/>`;
+    hitButton.innerHTML = `<img src="./images/hitbutton.png"/>`;
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     }
   
