@@ -180,17 +180,13 @@ function stand() {
 
 
   if(secondHand) {
-    while (true){
-      if (dealerValues() <17 ){
+    while (dealerValues() <17){
         currentCard = kortlek.dra_kort();
         dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
         dealerCards.push(currentCard);
      
-      } 
-      if (bust === true){
-        continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-        return ''
-      }
+       
+      
       if (dealerValues() > 21){
         for (i in dealerCards){
           if (dealerCards[i].value === 11){
@@ -202,33 +198,37 @@ function stand() {
             }
           }
         }
-        
-        if (dealerValues() > 21){
-          victoryText.innerHTML =`Du vann $${2*player.bet}`;
+      } 
+    }
+    if (bust === true){
+      continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
+      return ''
+    }
+    if (dealerValues() > 21){
+      victoryText.innerHTML =`Du vann $${2*player.bet}`;
+      player.chips += 2*player.bet
+      continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
+      return''
+    
+    } else {
+        if (player.points === dealerPoints){
+          victoryText.innerHTML = 'Push'
+          player.chips += player.bet
+          continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
+          return ''
+        } else if (player.points > dealerPoints){
+          victoryText.innerHTML =`Du vann $${2*player.bet}`
           player.chips += 2*player.bet
           continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-          return''
+          return ''
+        } else if (player.points < dealerPoints ) {
+          victoryText.innerHTML ='Dealer vann'
+          continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
+          return ''
         }
-      
-      } else {
-          if (player.points === dealerPoints){
-            victoryText.innerHTML = 'Push'
-            player.chips += player.bet
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-            return ''
-          } else if (player.points > dealerPoints){
-            victoryText.innerHTML =`Du vann $${2*player.bet}`
-            player.chips += 2*player.bet
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-            return ''
-          } else if (player.points < dealerPoints ) {
-            victoryText.innerHTML ='Dealer vann'
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-            return ''
-          }
       }
-    }
   }
+
 }
 
 function dealerValues(){
