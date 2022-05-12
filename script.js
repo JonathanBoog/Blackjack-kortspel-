@@ -159,6 +159,7 @@ function doubleDown() {
 
   player.chips -= player.bet;
   player.bet = player.bet * 2;
+  etAmount.innerHTML = `Ditt bet: ${player.bet}`
   currentCard = kortlek.dra_kort();
   playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
   playerCards.push(currentCard)
@@ -287,7 +288,9 @@ function split() {
   // Summera handen
   handBValue = playerValues();
 
+  hasSplit = false;
 
+  secondHand = false;
 
 }
 
