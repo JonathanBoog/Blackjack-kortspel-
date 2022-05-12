@@ -119,10 +119,11 @@ body {
   display: flex;
 	justify-content: top; 
   align-items: top;
-  left: 5%;
+  flex-direction: column;
+  left: 15%;
   bottom: 10%; 
   width: 10%;
-  height: 70%;
+  height: 60%;
   background-color: transparent;
 
 }
@@ -198,6 +199,7 @@ body {
   width: 20%;
   height: 10%;
   font-size: 25px;
+  color:rgb(121, 226, 23);
 }
 
 #amount-chips-container {
@@ -205,10 +207,11 @@ body {
 	display: flex;
 	justify-content: right; /* Centering i kolumnen, dvs vertikalt */
   top: 10%; 
-  left: 5%;
-  width: 20%;
+  left: 0.5%;
+  width: 30%;
   height: 10%;
   font-size: 25px;
+  color:rgb(121, 226, 23);
 }
 
 #start-button-container {

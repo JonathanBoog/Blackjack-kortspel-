@@ -138,34 +138,34 @@ function hit() {
     if (secondHand === false) {
       currentCard = kortlek.dra_kort();
       handAContainer.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-      playerCards.push(currentCard)
-      player.points += currentCard.value
+      playerCards.push(currentCard);
+      player.points += currentCard.value;
     } else {
       currentCard = kortlek.dra_kort();
       handBContainer.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-      playerCards.push(currentCard)
-      player.points += currentCard.value
+      playerCards.push(currentCard);
+      player.points += currentCard.value;
     }
   } else {
     currentCard = kortlek.dra_kort();
     playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-    playerCards.push(currentCard)
-    player.points += currentCard.value
+    playerCards.push(currentCard);
+    player.points += currentCard.value;
   }
   showingButtons()
 }
 
 function doubleDown() {
-
-  player.chips -= player.bet;
-  player.bet = player.bet * 2;
-  etAmount.innerHTML = `Ditt bet: ${player.bet}`
-  currentCard = kortlek.dra_kort();
-  playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-  playerCards.push(currentCard)
-  showingButtons()
-  stand()
-
+  if(player.chips/player.bet >= 1){
+    player.chips -= player.bet;
+    player.bet = player.bet * 2;
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
+    currentCard = kortlek.dra_kort();
+    playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+    playerCards.push(currentCard);
+    showingButtons();
+    stand();
+  }
 }
 
 function stand() {
@@ -213,6 +213,7 @@ function stand() {
       } else {
           if (player.points === dealerPoints){
             victoryText.innerHTML = 'Push'
+            player.chips += player.bet
             continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
             return ''
           } else if (player.points > dealerPoints){
@@ -303,7 +304,7 @@ function canSplit() {
 }
 
 function canDoubleDown() {
-  if (playerCards.length == 2 && player.chips/player.bet >= 2) {
+  if (playerCards.length == 2 && (player.chips/player.bet) >= 1) {
     return true;
   }
 }
@@ -399,6 +400,7 @@ function startOfGame(){
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
     continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
+    player.chips += player.bet
     return ''
   } else if (player.points === 21){
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
@@ -434,15 +436,14 @@ function showingButtons (){
 
   if (player.points > 21 ){
     victoryText.innerHTML ='Bust';
-
     standButton.innerHTML = `<img src=""/>`;
-    
     doubledownButton.innerHTML = `<img src=""/>`;
     splitButton.innerHTML = `<img src=""/>`;
     hitButton.innerHTML = `<img src=""/>`;
     bust = true
     stand()
     continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
+    bust = false
     }
   else if (canSplit()) {
     // här läggs knapparna split, hit, stand och double down till
