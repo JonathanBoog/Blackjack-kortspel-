@@ -1,5 +1,10 @@
-  //Background:
+//Variablar
+let hasSplit = false;
+let secondHand = false;
+let bust = false;
+let firsthand = false
 
+//Background:
 document.body.style.backgroundImage = "url('./images/bakgrunds_bild.png')";
 document.body.style.backgroundSize = "cover"
 document.body.style.backgroundRepeat = "no-repeat"
@@ -132,10 +137,18 @@ class Kort {
       }
     }
   }
-  
+
+function pausecomp(millis)
+{
+    var date = new Date();
+    var curDate = null;
+    do { curDate = new Date(); }
+    while(curDate-date < millis);
+}
+
 function hit() {
-  if (hasSplit) {
-    if (secondHand === false) {
+  if (hasSplit === true) {
+    if (firsthand === true) {
       currentCard = kortlek.dra_kort();
       handAContainer.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
       playerCards.push(currentCard);
@@ -169,6 +182,11 @@ function doubleDown() {
 }
 
 function stand() {
+  if(firsthand === true){
+    firsthand = false;
+    console.log('första hand avklarad')
+    return''
+  }
   standButton.innerHTML = `<img src=""/>`;
   hitButton.innerHTML = `<img src=""/>`;
   doubledownButton.innerHTML = `<img src=""/>`;
@@ -179,7 +197,6 @@ function stand() {
   dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
 
 
-  if(secondHand) {
     while (dealerValues() <17){
         currentCard = kortlek.dra_kort();
         dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
@@ -227,7 +244,6 @@ function stand() {
           return ''
         }
       }
-  }
 
 }
 
@@ -248,6 +264,9 @@ function playerValues(){
 }
 
 function split() {
+  if(canSplit() === false){
+    return ''
+  }
   playerCardImage.innerHTML = `<img src=""/>`;
   console.log('funktion split')
   hasSplit = true;
@@ -271,10 +290,12 @@ function split() {
   handBContainer.innerHTML = `<img src="./PNG-cards-1.3/${tempHand[0].bild}.png"/>`;
   handBContainer.innerHTML += `<img src="./PNG-cards-1.3/${tempHand[1].bild}.png"/>`;
 
-  
+  firsthand = true;
+  /*
   secondHand = false;
   // Kör igenom första handen
   showingButtons();
+  
 
   // Summera handen
   handAValue = playerValues();
@@ -289,15 +310,20 @@ function split() {
   // Summera handen
   handBValue = playerValues();
 
-  hasSplit = false;
 
   secondHand = false;
+*/
+}
 
+function split1(){
+  //hej
 }
 
 function canSplit() {
   if ((playerCards[0].value == playerCards[1].value) && (playerCards.length == 2) && (hasSplit === false)) {
+    console.log('hej')
     return true;
+    
   } else {
     return false;
   }
@@ -335,6 +361,7 @@ function nyKortlek(){
 }
 
 function startMenu(){
+  hasSplit = false;
   continueButton.innerHTML =""
 
 
@@ -360,6 +387,10 @@ function startMenu(){
 
 
 function startOfGame(){
+  if (player.bet <= 0){
+    return''
+  }
+
   startDealing.innerHTML = "";
   amountChips.innerHTML = "";
   betting1.innerHTML = "";
@@ -454,12 +485,10 @@ function showingButtons (){
     splitButton.innerHTML = `<img src="./images/splitbutton.png"/>`;
 
   } else if (canDoubleDown()) {
-
     hitButton.innerHTML = `<img src="./images/hitbutton.png"/>`;
     doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     } else {
-
     hitButton.innerHTML = `<img src="./images/hitbutton.png"/>`;
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
     }
@@ -472,12 +501,6 @@ let dealerCards;
 let dealerPoints;
 let dealerCard1;
 let dealerCard2;
-
-// Om man har splittat
-let hasSplit = false;
-let secondHand = true;
-
-let bust = false;
 
 
 startMenu()
