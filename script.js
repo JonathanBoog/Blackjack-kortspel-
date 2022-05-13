@@ -320,11 +320,15 @@ function split1(){
 }
 
 function canSplit() {
+  console.log(playerCards[0].value, playerCards[1].value)
+  console.log(playerCards.length)
+  console.log(hasSplit)
   if ((playerCards[0].value == playerCards[1].value) && (playerCards.length == 2) && (hasSplit === false)) {
-    console.log('hej')
+    console.log('yes')
     return true;
     
   } else {
+    console.log('no')
     return false;
   }
 }
@@ -399,7 +403,7 @@ function startOfGame(){
   betting4.innerHTML = "";
 
 
-  kortlek.blanda();
+  //kortlek.blanda();
   playerCards = [];
   dealerCards = [];
 
@@ -465,7 +469,7 @@ function showingButtons (){
     }
   }
 
-  if (player.points > 21 ){
+  if (player.points > 21 && (playerCards[0].value != 11 && playerCards[1].value != 11)){
     victoryText.innerHTML ='Bust';
     standButton.innerHTML = `<img src=""/>`;
     doubledownButton.innerHTML = `<img src=""/>`;
