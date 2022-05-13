@@ -205,7 +205,7 @@ function stand() {
       return ''
     }
     if (dealerValues() > 21){
-      victoryText.innerHTML =`Du vann $${2*player.bet}`;
+      victoryText.innerHTML =`Du vann $${player.bet}`;
       player.chips += 2*player.bet
       continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
       return''
@@ -217,7 +217,7 @@ function stand() {
           continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
           return ''
         } else if (player.points > dealerPoints){
-          victoryText.innerHTML =`Du vann $${2*player.bet}`
+          victoryText.innerHTML =`Du vann $${player.bet}`
           player.chips += 2*player.bet
           continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
           return ''
@@ -405,7 +405,7 @@ function startOfGame(){
   } else if (player.points === 21){
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
-    victoryText.innerHTML =`Du vann $${2.5*player.bet}`
+    victoryText.innerHTML =`Du vann $${1.5*player.bet}`
     continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
     player.chips += 2.5*player.bet
     return ''
