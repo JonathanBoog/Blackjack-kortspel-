@@ -272,7 +272,7 @@ function stand() {
       } 
     }
     
-    if (hasSplit = true){
+    if (hasSplit === true){
       if (bustFirstHand === true){
         console.log('bust första hand')
         bustFirstHand = false;
