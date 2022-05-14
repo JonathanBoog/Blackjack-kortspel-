@@ -276,8 +276,8 @@ function stand() {
       if (bustFirstHand === true){
         console.log('bust första hand')
         bustFirstHand = false;
-      }
-      else if (dealerValues() > 21){
+      
+      } else if (dealerValues() > 21){
         betAmount.innerHTML =`Du vann $${player.bet}`;
         player.chips += 2*player.bet
         
@@ -304,24 +304,19 @@ function stand() {
       else if (dealerValues() > 21){
         amountChips.innerHTML =`Du vann $${player.bet}`;
         player.chips += 2*player.bet
-        continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-        return''
         
       } else {
           if (playerValues2() === dealerPoints){
             amountChips.innerHTML = 'Push'
             player.chips += player.bet
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-            return ''
-          } else if (player.points > dealerPoints){
+
+          } else if (player.points2 > dealerPoints){
             amountChips.innerHTML =`Du vann $${player.bet}`
             player.chips += 2*player.bet
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-            return ''
-          } else if (player.points < dealerPoints ) {
+
+          } else if (player.points2 < dealerPoints ) {
             amountChips.innerHTML ='Dealer vann'
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-            return ''
+
           }
       }
       continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
