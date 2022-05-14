@@ -566,6 +566,7 @@ function startOfGame(){
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
     continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+    continueButtonOff = false;
     player.chips += player.bet;
     return '';
   } else if (player.points === 21){
@@ -573,6 +574,7 @@ function startOfGame(){
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
     victoryText.innerHTML =`Du vann $${1.5*player.bet}`;
     continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+    continueButtonOff = false;
     player.chips += 2.5*player.bet;
     return '';
   } else if (dealerPoints === 21) {
@@ -580,6 +582,7 @@ function startOfGame(){
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
     victoryText.innerHTML ='Dealern fick BLACKJACK';
     continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+    continueButtonOff = false;
     return '';
   }
   
