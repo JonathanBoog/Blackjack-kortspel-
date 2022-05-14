@@ -1,28 +1,45 @@
-//Variablar
-let hasSplit = false;
-let secondHand = false;
-let bust = false;
-let firsthand = false
+
+
+//Variabler
+let hasSplit = false; // Om man har splittat
+let secondHand; 
+let firsthand = false //Om spelaren vid split är på sin första hand eller ej 
+let bust = false; // Om bust eller ej
+let playerCards; // Spelarens kort
+let dealerCards; // Dealerns kort
+let dealerPoints; // Dealerns sammanlagda poäng på kort
+let dealerCard1; // Dealerns första kort
+let dealerCard2; // Dealerns andra kort
+let bustFirstHand = false; // Vid split; om första hand har bustat
+let bustSecondHand = false; // Vid split; om andra hand har bustat
+let menuButtonsOff; // Knapparna i menyn stängs av
+let firstTwoCards = true; // Om man får två ess tror programmet att det är eventuellt bust och därmed går det inte att använda split
+let continueButtonOff = false; // Off för continue knappen
+
 
 //Background:
 document.body.style.backgroundImage = "url('./images/bakgrunds_bild.png')";
-document.body.style.backgroundSize = "cover"
-document.body.style.backgroundRepeat = "no-repeat"
+document.body.style.backgroundSize = "cover";
+document.body.style.backgroundRepeat = "no-repeat";
 
-let hitButton = document.getElementById("button-1-container");
-let splitButton = document.getElementById("button-2-container");
-let doubledownButton = document.getElementById("button-3-container");
-let standButton = document.getElementById("button-4-container");
+let hitButton = document.getElementById("button-1-container"); // Hit knapp
+let splitButton = document.getElementById("button-2-container"); // Split knapp
+let doubledownButton = document.getElementById("button-3-container"); // Doubledown knapp
+let standButton = document.getElementById("button-4-container"); // Stand knapp
 
-let playerCardImage = document.getElementById("player-card-container");
-let dealerCardImage = document.getElementById("dealer-card-container")
+let playerCardImage = document.getElementById("player-card-container"); // Spelarens container för bilder på korten
+let dealerCardImage = document.getElementById("dealer-card-container"); // Dealerns container för bilder på korten
+let handAContainer = document.getElementById("handA-container"); // Ena containern för kort vid split
+let handBContainer = document.getElementById("handB-container");  // Ena containern för kort vid split
+handAContainer.style.border = 'transparent'; // Gör border osynlig
+handBContainer.style.border = 'transparent'; // Gör border osynlig
 
 
 let victoryText = document.getElementById("header-text");
-let betAmount = document.getElementById("bet-text");
-let amountChips = document.getElementById("amount-chips");
-let startDealing = document.getElementById("start-button-container");
-let continueButton = document.getElementById("continue-button-container");
+let betAmount = document.getElementById("bet-text"); // Visar mängden som spelaren har bettat
+let amountChips = document.getElementById("amount-chips"); // visar antalet chips som spelaren har
+let startDealing = document.getElementById("start-button-container"); 
+let continueButton = document.getElementById("continue-button-container"); 
 
 
 let betting1 = document.getElementById("button-betting1-container");
@@ -30,8 +47,6 @@ let betting2 = document.getElementById("button-betting2-container");
 let betting3 = document.getElementById("button-betting3-container");
 let betting4 = document.getElementById("button-betting4-container");
 
-let handAContainer = document.getElementById("handA-container");
-let handBContainer = document.getElementById("handB-container");
 
 
 
@@ -44,46 +59,50 @@ let player = {
   
 }
 function bet1(){
+  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
+    return'';
+  }
   if(player.chips >= 50){
-    player.bet += 50
-    player.chips -=50
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`
-    amountChips.innerHTML = `Antal chips: ${player.chips}`
+    player.bet += 50;
+    player.chips -=50;
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
+    amountChips.innerHTML = `Antal chips: ${player.chips}`;
   }
 }
 function bet2(){
+  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
+    return'';
+  }
   if(player.chips >= 100){
-    player.bet += 100
-    player.chips -=100
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`
-    amountChips.innerHTML = `Antal chips: ${player.chips}`
+    player.bet += 100;
+    player.chips -=100;
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
+    amountChips.innerHTML = `Antal chips: ${player.chips}`;
   }
 }
 
 function bet3(){
+  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
+    return'';
+  }
   if(player.chips >= 500){
-    player.bet += 500
-    player.chips -=500
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`
-    amountChips.innerHTML = `Antal chips: ${player.chips}`
+    player.bet += 500;
+    player.chips -=500;
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
+    amountChips.innerHTML = `Antal chips: ${player.chips}`;
   }
 }
 
 function bet4(){
-  if(player.chips >= 1000){
-    player.bet += 1000
-    player.chips -=1000
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`
-    amountChips.innerHTML = `Antal chips: ${player.chips}`
+  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
+    return'';
   }
-}
-
-function betting(){
-  betting1.innerHTML = `<img src="./images/chips50.png"/>`;
-  betting2.innerHTML = `<img src="./images/chips100.png"/>`;
-  betting3.innerHTML = `<img src="./images/chips500.png"/>`;
-  betting4.innerHTML = `<img src="./images/chips1000.png"/>`;
-
+  if(player.chips >= 1000){
+    player.bet += 1000;
+    player.chips -=1000;
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
+    amountChips.innerHTML = `Antal chips: ${player.chips}`;
+  }
 }
 
 // Klass för att skapa spelkort
@@ -187,11 +206,11 @@ function hit() {
     currentCard = kortlek.dra_kort();
     playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
     playerCards.push(currentCard);
-    playerValues()
+    playerValues();
   }
 
 
-  showingButtons()
+  showingButtons();
 }
 
 function doubleDown() {
@@ -201,7 +220,7 @@ function doubleDown() {
     betAmount.innerHTML = `Ditt bet: ${player.bet}`;
     currentCard = kortlek.dra_kort();
     playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-    player.points += currentCard.value
+    player.points += currentCard.value;
     playerCards.push(currentCard);
     if (playerValues() > 21){
       for (i in playerCards){
@@ -236,11 +255,13 @@ function doubleDown() {
 function stand() {
   if(firsthand === true){
     firsthand = false;
-    console.log('första hand avklarad')
+    handAContainer.style.border = 'transparent';
+    handBContainer.style.border = '';
     return''
   }
     
-  
+  continueButtonOff = false; // Gör så att knappen "Continue" går att användas
+
   standButton.innerHTML = `<img src=""/>`;
   hitButton.innerHTML = `<img src=""/>`;
   doubledownButton.innerHTML = `<img src=""/>`;
@@ -272,118 +293,118 @@ function stand() {
       } 
     }
     
+    handBContainer.style.border = 'transparent';
+
     if (hasSplit === true){
       if (bustFirstHand === true){
         console.log('bust första hand')
         bustFirstHand = false;
       
-      } else if (dealerValues() > 21){
+      } else if (dealerPoints > 21){
         betAmount.innerHTML =`Du vann $${player.bet}`;
-        player.chips += 2*player.bet
+        player.chips += 2*player.bet;
         
       
       } else {
           if (playerValues() === dealerPoints){
-            betAmount.innerHTML = 'Push'
-            player.chips += player.bet
+            betAmount.innerHTML = 'Push';
+            player.chips += player.bet;
           } else if (player.points > dealerPoints){
             betAmount.innerHTML =`Du vann $${player.bet}`
-            player.chips += 2*player.bet
+            player.chips += 2*player.bet;
           } else if (player.points < dealerPoints ) {
-            betAmount.innerHTML ='Dealer vann'
+            betAmount.innerHTML ='Dealer vann';
           }
       }
       
       
       if (bustSecondHand === true){
-        console.log('bust andra hand')
-        amountChips.innerHTML =`<img src="./images/continue-button.png"/>`
+        amountChips.innerHTML =`<img src="./images/continue-button.png"/>`;
         bustSecondHand = false;
         return ''
       }
-      else if (dealerValues2() > 21){
+      else if (dealerPoints > 21){
         amountChips.innerHTML =`Du vann $${player.bet}`;
-        player.chips += 2*player.bet
+        player.chips += 2*player.bet;
         
       } else {
           if (playerValues2() === dealerPoints){
-            amountChips.innerHTML = 'Push'
-            player.chips += player.bet
+            amountChips.innerHTML = 'Push';
+            player.chips += player.bet;
 
           } else if (player.points2 > dealerPoints){
-            amountChips.innerHTML =`Du vann $${player.bet}`
-            player.chips += 2*player.bet
+            amountChips.innerHTML =`Du vann $${player.bet}`;
+            player.chips += 2*player.bet;
 
           } else if (player.points2 < dealerPoints ) {
-            amountChips.innerHTML ='Dealer vann'
+            amountChips.innerHTML ='Dealer vann';
 
           }
       }
-      continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-      return''
+      continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+      return'';
       
       
     } else {
       if (bust === true){
-        continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-        return ''
+        continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+        return '';
       }
       else if (dealerValues() > 21){
         victoryText.innerHTML =`Du vann $${player.bet}`;
-        player.chips += 2*player.bet
-        continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-        return''
+        player.chips += 2*player.bet;
+        continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+        return'';
       
       } else {
           if (player.points === dealerPoints){
-            victoryText.innerHTML = 'Push'
-            player.chips += player.bet
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-            return ''
+            victoryText.innerHTML = 'Push';
+            player.chips += player.bet;
+            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+            return '';
           } else if (player.points > dealerPoints){
-            victoryText.innerHTML =`Du vann $${player.bet}`
-            player.chips += 2*player.bet
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-            return ''
+            victoryText.innerHTML =`Du vann $${player.bet}`;
+            player.chips += 2*player.bet;
+            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+            return '';
           } else if (player.points < dealerPoints ) {
-            victoryText.innerHTML ='Dealer vann'
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-            return ''
+            victoryText.innerHTML ='Dealer vann';
+            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+            return '';
           }
         }
     }
 }
 
 function dealerValues(){
-  dealerPoints = 0
+  dealerPoints = 0;
   for (b in dealerCards){
     dealerPoints += dealerCards[b].value;
   }
-  return dealerPoints
+  return dealerPoints;
 }
 
 function playerValues(){
-  player.points = 0
+  player.points = 0;
   for (j in playerCards){
     player.points += playerCards[j].value;
   }
-  return player.points
+  return player.points;
 }
 
-function playerValues2() {
-  player.points2 = 0
+function playerValues2() { // Används för den andra handen när man har splittat
+  player.points2 = 0;
   for (j in secondHand){
     player.points2 += secondHand[j].value;
   }
-  return player.points2
+  return player.points2;
 }
 
 function split() {
   if(canSplit() === false){
-    return ''
+    return '';
   }
   playerCardImage.innerHTML = `<img src=""/>`;
-  console.log('funktion split')
   hasSplit = true;
 
   secondHand = [];
@@ -407,34 +428,13 @@ function split() {
   handBContainer.innerHTML += `<img src="./PNG-cards-1.3/${secondHand[1].bild}.png"/>`;
 
   firsthand = true;
-  showingButtons();
-  /*
-  secondHand = false;
-  // Kör igenom första handen
-  showingButtons();
-  
+  handAContainer.style.border = '';
 
-  // Summera handen
-  handAValue = playerValues();
 
-  // Byt plats på tempHand och playerCards
-  playerCards = tempHand;
-
-  secondHand = true;
-  // Loop för andra
   showingButtons();
 
-  // Summera handen
-  handBValue = playerValues();
-
-
-  secondHand = false;
-*/
 }
 
-function split1(){
-  //hej
-}
 
 function canSplit() {
   if ((playerCards[0].value == playerCards[1].value) && (playerCards.length == 2) && (hasSplit === false) && (player.chips/player.bet) >= 1) {
@@ -479,14 +479,20 @@ function nyKortlek(){
 }
 
 function startMenu(){
+  if (continueButtonOff === true){
+    return'';
+  }
+  continueButtonOff = true; // Stänger av continue knappen
+  continueButton.innerHTML =""; // Tar bort bilden för continue
+
+  menuButtonsOff = false; // Sätter igång start knappen
+  startDealing.innerHTML = `<img src="./images/Start-Button.png"/>`; // Lägger till bilden på start knappen
   hasSplit = false;
-  continueButton.innerHTML =""
-  
 
   player.bet = 0;
   player.points = 0;
-  startDealing.innerHTML = `<img src="./images/Start-Button.png"/>`;
-  
+
+  //Alla bilder på kort försvinner
   playerCardImage.innerHTML = "";
   dealerCardImage.innerHTML = "";
   handAContainer.innerHTML = "";
@@ -495,20 +501,33 @@ function startMenu(){
   betAmount.innerHTML = `Ditt bet: ${player.bet}`;
   amountChips.innerHTML = `Antal chips: ${player.chips}`;
   victoryText.innerHTML = "";
+  
+  // De olika knappar försvinner efter runda
   standButton.innerHTML = "";
   hitButton.innerHTML = "";
   doubledownButton.innerHTML = "";
   splitButton.innerHTML = "";
   
-  betting()
+  
+  // Bilder på de olika chipsen
+  betting1.innerHTML = `<img src="./images/chips50.png"/>`;
+  betting2.innerHTML = `<img src="./images/chips100.png"/>`;
+  betting3.innerHTML = `<img src="./images/chips500.png"/>`;
+  betting4.innerHTML = `<img src="./images/chips1000.png"/>`;
+
 }
 
 
 function startOfGame(){
-  if (player.bet <= 0){
-    return''
+  
+  if (menuButtonsOff === true){ // en ny runda får ej starta medan en annan är igång
+    return'';
+  }
+  if (player.bet <= 0){ // rundan får ej starta om man inte bettat något
+    return'';
   }
 
+  menuButtonsOff = true;
   startDealing.innerHTML = "";
   amountChips.innerHTML = "";
   betting1.innerHTML = "";
@@ -523,55 +542,53 @@ function startOfGame(){
 
   currentCard = kortlek.dra_kort();
   playerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-  playerCards.push(currentCard)
+  playerCards.push(currentCard);
 
   currentCard = kortlek.dra_kort();
   dealerCard1 = currentCard;
   dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/kort_baksida.png"/>`;
-  dealerCards.push(currentCard)
+  dealerCards.push(currentCard);
 
   currentCard = kortlek.dra_kort();
   playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-  playerCards.push(currentCard)
+  playerCards.push(currentCard);
 
   currentCard = kortlek.dra_kort();
   dealerCard2 = currentCard;
   dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-  dealerCards.push(currentCard)
+  dealerCards.push(currentCard);
 
-  for (i in playerCards){
-    player.points += playerCards[i].value;
-  }
+  playerValues();
   dealerValues();
   
   if (player.points === 21 && dealerPoints === 21){
-    victoryText.innerHTML ='Push'
+    victoryText.innerHTML ='Push';
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
-    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-    player.chips += player.bet
-    return ''
+    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+    player.chips += player.bet;
+    return '';
   } else if (player.points === 21){
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
-    victoryText.innerHTML =`Du vann $${1.5*player.bet}`
-    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-    player.chips += 2.5*player.bet
-    return ''
+    victoryText.innerHTML =`Du vann $${1.5*player.bet}`;
+    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+    player.chips += 2.5*player.bet;
+    return '';
   } else if (dealerPoints === 21) {
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
-    victoryText.innerHTML ='Dealern fick BLACKJACK'
-    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-    return ''
+    victoryText.innerHTML ='Dealern fick BLACKJACK';
+    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+    return '';
   }
   
-  showingButtons ()
+  showingButtons ();
 }
 
 function showingButtons (){
   
-  if ((playerValues() > 21) && (playerCards[0].value != 11 && playerCards[1].value != 11) && playerCards.length != 2 && hasSplit === false){
+  if ((playerValues() > 21) && firstTwoCards === false &&  hasSplit === false){
     for (i in playerCards){
       if (playerCards[i].value === 11){
         playerCards[i].value = 1;
@@ -583,16 +600,16 @@ function showingButtons (){
     }
   }
 
-  if ((playerValues() > 21) && (playerCards[0].value != 11 && playerCards[1].value != 11) && playerCards.length != 2 && hasSplit === false){
+  if ((playerValues() > 21) && firstTwoCards === false && hasSplit === false){
     victoryText.innerHTML ='Bust';
     standButton.innerHTML = `<img src=""/>`;
     doubledownButton.innerHTML = `<img src=""/>`;
     splitButton.innerHTML = `<img src=""/>`;
     hitButton.innerHTML = `<img src=""/>`;
-    bust = true
+    bust = true;
     stand()
-    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`
-    bust = false
+    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+    bust = false;
     }
   else if (canSplit()) {
     // här läggs knapparna split, hit, stand och double down till
@@ -613,32 +630,27 @@ function showingButtons (){
     splitButton.innerHTML = "";
     doubledownButton.innerHTML = "";
     }
-  
+  firstTwoCards = false;
 }
+
+
 let kortlek = new Kortlek();
-nyKortlek();
-let playerCards;
-let dealerCards;
-let dealerPoints;
-let dealerCard1;
-let dealerCard2;
-let tempHand;
+nyKortlek(); // skapar kortlek
 startMenu();
-let bustFirstHand = false;
-let bustSecondHand = false;
+
 
 
 // Alla knappar och dess funktioner
-splitButton.addEventListener("click", split)
-hitButton.addEventListener("click", hit)
-standButton.addEventListener("click", stand)
-doubledownButton.addEventListener("click", doubleDown)
+splitButton.addEventListener("click", split) // Split, delar högen i två
+hitButton.addEventListener("click", hit) // Hit, tar upp ett nytt kort
+standButton.addEventListener("click", stand) // Stand
+doubledownButton.addEventListener("click", doubleDown) // Doubledown
 
 betting1.addEventListener("click", bet1)
 betting2.addEventListener("click", bet2)
 betting3.addEventListener("click", bet3)
 betting4.addEventListener("click", bet4)
 
-startDealing.addEventListener("click", startOfGame)
-continueButton.addEventListener("click",startMenu)
+startDealing.addEventListener("click", startOfGame) // Knapp för att starta rundan
+continueButton.addEventListener("click",startMenu) // Knapp för att gå vidare till menyn
 

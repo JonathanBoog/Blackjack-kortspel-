@@ -171,9 +171,9 @@ body {
   left: 25%;
   width: 15%;
   height: 15%;
-  /*border: solid;
+  border: solid;
   border-width: 10px;
-  border-color: rgb(255, 230, 0);*/
+  border-color: rgb(255, 230, 0);
 }
 
 #handB-container {
@@ -184,9 +184,9 @@ body {
   right: 25%;
   width: 15%;
   height: 15%;
-  /*border: solid;
+  border: solid;
   border-width: 10px;
-  border-color: rgb(255, 0, 217);*/
+  border-color: rgb(255, 0, 217);
 }
 
 #bet-output-container {
