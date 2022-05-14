@@ -522,7 +522,7 @@ function startOfGame(){
   betting4.innerHTML = "";
 
 
-  //kortlek.blanda();
+  kortlek.blanda();
   playerCards = [];
   dealerCards = [];
 
