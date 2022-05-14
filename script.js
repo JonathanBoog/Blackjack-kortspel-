@@ -301,7 +301,7 @@ function stand() {
         bustSecondHand = false;
         return ''
       }
-      else if (dealerValues() > 21){
+      else if (dealerValues2() > 21){
         amountChips.innerHTML =`Du vann $${player.bet}`;
         player.chips += 2*player.bet
         
