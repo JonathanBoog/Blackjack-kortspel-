@@ -15,7 +15,7 @@ let bustSecondHand = false; // Vid split; om andra hand har bustat
 let menuButtonsOff; // Knapparna i menyn stängs av
 let firstTwoCards = true; // Om man får två ess tror programmet att det är eventuellt bust och därmed går det inte att använda split
 let continueButtonOff = false; // Off för continue knappen
-
+let multiplyBet = 1; //Ökar bet
 
 //Background:
 document.body.style.backgroundImage = "url('./images/bakgrunds_bild.png')";
@@ -216,8 +216,9 @@ function hit() {
 function doubleDown() {
   if(canDoubleDown() ===true){
     player.chips -= player.bet;
-    player.bet = player.bet * 2;
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
+    multiplyBet = 2;
+    
+    betAmount.innerHTML = `Ditt bet: ${player.bet*multiplyBet}`;
     currentCard = kortlek.dra_kort();
     playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
     player.points += currentCard.value;
@@ -301,17 +302,17 @@ function stand() {
         bustFirstHand = false;
       
       } else if (dealerPoints > 21){
-        betAmount.innerHTML =`Du vann $${player.bet}`;
-        player.chips += 2*player.bet;
+        betAmount.innerHTML =`Du vann $${player.bet*multiplyBet}`;
+        player.chips += (player.bet + player.bet*multiplyBet);
         
       
       } else {
           if (playerValues() === dealerPoints){
             betAmount.innerHTML = 'Push';
-            player.chips += player.bet;
+            player.chips += multiplyBet*player.bet;
           } else if (player.points > dealerPoints){
-            betAmount.innerHTML =`Du vann $${player.bet}`
-            player.chips += 2*player.bet;
+            betAmount.innerHTML =`Du vann $${player.bet*multiplyBet}`
+            player.chips += (player.bet + player.bet*multiplyBet);
           } else if (player.points < dealerPoints ) {
             betAmount.innerHTML ='Dealer vann';
           }
@@ -324,17 +325,17 @@ function stand() {
         return ''
       }
       else if (dealerPoints > 21){
-        amountChips.innerHTML =`Du vann $${player.bet}`;
-        player.chips += 2*player.bet;
+        amountChips.innerHTML =`Du vann $${player.bet*multiplyBet}`;
+        player.chips += (player.bet + player.bet*multiplyBet);
         
       } else {
           if (playerValues2() === dealerPoints){
             amountChips.innerHTML = 'Push';
-            player.chips += player.bet;
+            player.chips += player.bet*multiplyBet;
 
           } else if (player.points2 > dealerPoints){
-            amountChips.innerHTML =`Du vann $${player.bet}`;
-            player.chips += 2*player.bet;
+            amountChips.innerHTML =`Du vann $${player.bet*multiplyBet}`;
+            player.chips += (player.bet + player.bet*multiplyBet);
 
           } else if (player.points2 < dealerPoints ) {
             amountChips.innerHTML ='Dealer vann';
@@ -351,8 +352,8 @@ function stand() {
         return '';
       }
       else if (dealerValues() > 21){
-        victoryText.innerHTML =`Du vann $${player.bet}`;
-        player.chips += 2*player.bet;
+        victoryText.innerHTML =`Du vann $${multiplyBet*player.bet}`;
+        player.chips += player.chips += (player.bet + player.bet*multiplyBet);
         continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
         return'';
       
@@ -363,8 +364,8 @@ function stand() {
             continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
             return '';
           } else if (player.points > dealerPoints){
-            victoryText.innerHTML =`Du vann $${player.bet}`;
-            player.chips += 2*player.bet;
+            victoryText.innerHTML =`Du vann $${player.bet*multiplyBet}`;
+            player.chips += (player.bet + player.bet*multiplyBet);
             continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
             return '';
           } else if (player.points < dealerPoints ) {
@@ -491,6 +492,7 @@ function startMenu(){
 
   player.bet = 0;
   player.points = 0;
+  multiplyBet = 1;
 
   //Alla bilder på kort försvinner
   playerCardImage.innerHTML = "";
