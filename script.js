@@ -24,7 +24,7 @@ document.body.style.backgroundRepeat = "no-repeat";
 
 let hitButton = document.getElementById("button-1-container"); // Hit knapp
 let splitButton = document.getElementById("button-2-container"); // Split knapp
-let doubledownButton = document.getElementById("button-3-container"); // Doubledown knapp
+let doubledownButton = document.getElementById("button-3-container"); // Double down knapp
 let standButton = document.getElementById("button-4-container"); // Stand knapp
 
 let playerCardImage = document.getElementById("player-card-container"); // Spelarens container för bilder på korten
@@ -647,7 +647,7 @@ startMenu();
 splitButton.addEventListener("click", split) // Split, delar högen i två
 hitButton.addEventListener("click", hit) // Hit, tar upp ett nytt kort
 standButton.addEventListener("click", stand) // Stand
-doubledownButton.addEventListener("click", doubleDown) // Doubledown
+doubledownButton.addEventListener("click", doubleDown) // Double down
 
 betting1.addEventListener("click", bet1)
 betting2.addEventListener("click", bet2)
