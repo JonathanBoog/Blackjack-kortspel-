@@ -157,6 +157,9 @@ function pausecomp(millis)
 }
 
 function hit() {
+  if (menuButtonsOff === false){
+    return''
+  }
   if (hasSplit === true) {
     if (firsthand === true) {
       currentCard = kortlek.dra_kort();
@@ -174,8 +177,9 @@ function hit() {
           }
         }
         if (playerValues() > 21){
-          betAmount.style.color = rgb(255, 230, 0);
           betAmount.innerHTML ='Bust';
+          handAContainer.style.border = 'transparent';
+          handBContainer.style.border = '';
           firsthand = false;
           bustFirstHand = true;
         }
@@ -197,7 +201,6 @@ function hit() {
         }
       }
       if (playerValues2() > 21){
-        amountChips.style.color = rgb(255, 0, 217);
         amountChips.innerHTML ='Bust';
         bustSecondHand = true;
         stand();
@@ -255,6 +258,9 @@ function doubleDown() {
 }
 
 function stand() {
+  if (menuButtonsOff === false){
+    return''
+  }
   if(firsthand === true){
     firsthand = false;
     handAContainer.style.border = 'transparent';
@@ -264,121 +270,114 @@ function stand() {
     
   continueButtonOff = false; // Gör så att knappen "Continue" går att användas
 
-  standButton.innerHTML = `<img src=""/>`;
-  hitButton.innerHTML = `<img src=""/>`;
-  doubledownButton.innerHTML = `<img src=""/>`;
-  splitButton.innerHTML = `<img src=""/>`;
+  console.log('hola')
+  
   
   //Dealer kort
   dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
   dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
 
+  doubledownButton.innerHTML = `<img src=""/>`;
+  splitButton.innerHTML = `<img src=""/>`;
+  standButton.innerHTML = `<img src=""/>`;
+  hitButton.innerHTML = `<img src=""/>`;
 
-    while (dealerValues() <17){
-        currentCard = kortlek.dra_kort();
-        dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-        dealerCards.push(currentCard);
+
+  while (dealerValues() <17){
+      currentCard = kortlek.dra_kort();
+      dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+      dealerCards.push(currentCard);
      
-       
-      
-      if (dealerValues() > 21){
-        for (i in dealerCards){
-          if (dealerCards[i].value === 11){
-            dealerCards[i].value = 1;
-            dealerValues();
-            if (dealerPoints <= 21){
-              break;
+    if (dealerValues() > 21){
+      for (i in dealerCards){
+        if (dealerCards[i].value === 11){
+          dealerCards[i].value = 1;
+          dealerValues();
+          if (dealerPoints <= 21){
+            break;
               
-            }
           }
         }
-      } 
-    }
+      }
+    } 
+  }
     
-    handBContainer.style.border = 'transparent';
+  handBContainer.style.border = 'transparent';
 
-    if (hasSplit === true){
-      if (bustFirstHand === true){
-        console.log('bust första hand')
-        bustFirstHand = false;
+  if (hasSplit === true){
+    if (bustFirstHand === true){
+      bustFirstHand = false;
       
-      } else if (dealerPoints > 21){
-        betAmount.innerHTML =`Du vann $${player.bet}`;
-        player.chips += 2*player.bet;
+    } else if (dealerPoints > 21){
+      betAmount.innerHTML =`Du vann $${player.bet}`;
+      player.chips += 2*player.bet;
         
+    } else {
+        if (playerValues() === dealerPoints){
+          betAmount.innerHTML = 'Push';
+          player.chips += player.bet;
+        } else if (player.points > dealerPoints){
+          betAmount.innerHTML =`Du vann $${player.bet}`
+          player.chips += 2*player.bet;
+        } else if (player.points < dealerPoints ) {
+          betAmount.innerHTML ='Dealer vann';
+        }
+    }
       
-      } else {
-          if (playerValues() === dealerPoints){
-            betAmount.innerHTML = 'Push';
-            player.chips += player.bet;
-          } else if (player.points > dealerPoints){
-            betAmount.innerHTML =`Du vann $${player.bet}`
-            player.chips += 2*player.bet;
-          } else if (player.points < dealerPoints ) {
-            betAmount.innerHTML ='Dealer vann';
-          }
-      }
-      betAmount.style.color = '#ffe600';
-      
-      if (bustSecondHand === true){
-        amountChips.innerHTML =`<img src="./images/continue-button.png"/>`;
-        bustSecondHand = false;
-        amountChips.style.color = '#ff00d9';
-        return ''
-      }
-      else if (dealerPoints > 21){
+    if (bustSecondHand === true){
+      amountChips.innerHTML =`<img src="./images/continue-button.png"/>`;
+      bustSecondHand = false;
+      return ''
+    } else if (dealerPoints > 21){
+      amountChips.innerHTML =`Du vann $${player.bet}`;
+      player.chips += (2*player.bet);
+    } else {
+      if (playerValues2() === dealerPoints){
+        amountChips.innerHTML = 'Push';
+        player.chips += player.bet;
+
+      } else if (player.points2 > dealerPoints){
         amountChips.innerHTML =`Du vann $${player.bet}`;
-        player.chips += (2*player.bet);
-        
-      } else {
-          if (playerValues2() === dealerPoints){
-            amountChips.innerHTML = 'Push';
-            player.chips += player.bet;
+        player.chips += 2*player.bet;
 
-          } else if (player.points2 > dealerPoints){
-            amountChips.innerHTML =`Du vann $${player.bet}`;
-            player.chips += 2*player.bet;
+      } else if (player.points2 < dealerPoints ) {
+        amountChips.innerHTML ='Dealer vann';
 
-          } else if (player.points2 < dealerPoints ) {
-            amountChips.innerHTML ='Dealer vann';
-
-          }
       }
+    }
       
-      amountChips.style.color = '#ff00d9';
+    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+    return'';
+      
+  } else {
+    if (bust === true){
+      continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+      return '';
+    
+    } else if (dealerValues() > 21){
+      victoryText.innerHTML =`Du vann $${player.bet}`;
+      player.chips +=  2*player.bet;
       continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
       return'';
       
-      
     } else {
-      if (bust === true){
+      if (player.points === dealerPoints){
+        victoryText.innerHTML = 'Push';
+        player.chips += player.bet;
+        continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+        return '';
+      } else if (player.points > dealerPoints){
+        victoryText.innerHTML =`Du vann $${player.bet}`;
+        player.chips += 2*player.bet;
+        continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+        return '';
+      } else if (player.points < dealerPoints ) {
+        victoryText.innerHTML ='Dealer vann';
         continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
         return '';
       }
-      else if (dealerValues() > 21){
-        victoryText.innerHTML =`Du vann $${player.bet}`;
-        player.chips +=  2*player.bet;
-        continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
-        return'';
-      
-      } else {
-          if (player.points === dealerPoints){
-            victoryText.innerHTML = 'Push';
-            player.chips += player.bet;
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
-            return '';
-          } else if (player.points > dealerPoints){
-            victoryText.innerHTML =`Du vann $${player.bet}`;
-            player.chips += 2*player.bet;
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
-            return '';
-          } else if (player.points < dealerPoints ) {
-            victoryText.innerHTML ='Dealer vann';
-            continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
-            return '';
-          }
-        }
     }
+  }
 }
 
 function dealerValues(){
@@ -414,6 +413,11 @@ function split() {
   hasSplit = true;
 
   secondHand = [];
+
+  betAmount.innerHTML = `Ditt bet: ${player.bet}`;
+  amountChips.innerHTML = `Ditt bet: ${player.bet}`;
+  betAmount.style.color = '#ffe600';
+  amountChips.style.color = '#ff00d9';
 
 
   // Fördelar om korten till den temporära handen.

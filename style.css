@@ -61,7 +61,7 @@ body {
 #button-1-container {
 	/*Rutan som bildutmatningen sker i*/
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
   width: 20%;
   height: 20%;
@@ -98,7 +98,7 @@ body {
   position: fixed;
 	display: flex;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-  bottom: 30%; 
+  bottom: 25%; 
   width: 15%;
   height: 15%;
 
@@ -107,7 +107,7 @@ body {
   position: fixed;
 	display: flex;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-  bottom: 80%; 
+  bottom: 75%; 
   width: 15%;
   height: 15%;
 
@@ -166,8 +166,8 @@ body {
 #handA-container {
   position: fixed;
 	display: flex;
-	justify-content: left; /* Centering i kolumnen, dvs vertikalt */
-  bottom: 30%; 
+	justify-content: right; /* Centering i kolumnen, dvs vertikalt */
+  bottom: 25%; 
   left: 25%;
   width: 15%;
   height: 15%;
@@ -179,8 +179,8 @@ body {
 #handB-container {
   position: fixed;
 	display: flex;
-	justify-content: right; /* Centering i kolumnen, dvs vertikalt */
-  bottom: 30%; 
+	justify-content: left; /* Centering i kolumnen, dvs vertikalt */
+  bottom: 25%; 
   right: 25%;
   width: 15%;
   height: 15%;
@@ -206,9 +206,9 @@ body {
 	display: flex;
 	justify-content: right; /* Centering i kolumnen, dvs vertikalt */
   top: 10%; 
-  left: 0.5%;
+  left: -5%;
   width: 30%;
-  height: 10%;
+  height: 5%;
   font-size: 25px;
   color:rgb(121, 226, 23);
 }
@@ -228,9 +228,11 @@ body {
 
 #continue-button-container {
   /*Rutan som knapparna visas i*/
-  display: flex;
-  flex-direction: row;
-  justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-  width: 10%;
-  height: 10%;
+  position: fixed;
+	display: flex;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+  top: 43%;  /* Centering i kolumnen, dvs vertikalt */
+  width: 5%;
+  height: 5%;
+
 }
