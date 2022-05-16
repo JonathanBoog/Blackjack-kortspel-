@@ -279,8 +279,8 @@ function stand() {
   splitButton.innerHTML = `<img src=""/>`;
   standButton.innerHTML = `<img src=""/>`;
   hitButton.innerHTML = `<img src=""/>`;
-  console.log(bust)
-  console.log(bustFirstHand && bustSecondHand)
+
+  
   if (bust === true){
     null;
   } else if ((bustFirstHand && bustSecondHand) === true){
