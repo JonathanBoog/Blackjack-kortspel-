@@ -269,8 +269,6 @@ function stand() {
   }
     
   continueButtonOff = false; // Gör så att knappen "Continue" går att användas
-
-  console.log('hola')
   
   
   //Dealer kort
@@ -281,8 +279,13 @@ function stand() {
   splitButton.innerHTML = `<img src=""/>`;
   standButton.innerHTML = `<img src=""/>`;
   hitButton.innerHTML = `<img src=""/>`;
-
-  if (bust || (bustFirstHand && bustSecondHand)){
+  console.log(bust)
+  console.log(bustFirstHand && bustSecondHand)
+  if (bust === true){
+    null;
+  } else if ((bustFirstHand && bustSecondHand) === true){
+    null;
+  } else {
     while (dealerValues() <17){
         currentCard = kortlek.dra_kort();
         dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
