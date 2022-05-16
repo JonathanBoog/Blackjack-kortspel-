@@ -15,7 +15,7 @@ let bustSecondHand = false; // Vid split; om andra hand har bustat
 let menuButtonsOff; // Knapparna i menyn stängs av
 let firstTwoCards = true; // Om man får två ess tror programmet att det är eventuellt bust och därmed går det inte att använda split
 let continueButtonOff = false; // Off för continue knappen
-let multiplyBet = 1; //Ökar bet
+
 
 //Background:
 document.body.style.backgroundImage = "url('./images/bakgrunds_bild.png')";
@@ -174,6 +174,7 @@ function hit() {
           }
         }
         if (playerValues() > 21){
+          betAmount.style.color = rgb(255, 230, 0);
           betAmount.innerHTML ='Bust';
           firsthand = false;
           bustFirstHand = true;
@@ -196,11 +197,11 @@ function hit() {
         }
       }
       if (playerValues2() > 21){
+        amountChips.style.color = rgb(255, 0, 217);
         amountChips.innerHTML ='Bust';
         bustSecondHand = true;
         stand();
       }
-      
     }
   } else {
     currentCard = kortlek.dra_kort();
@@ -208,17 +209,17 @@ function hit() {
     playerCards.push(currentCard);
     playerValues();
   }
-
-
+  
   showingButtons();
 }
 
 function doubleDown() {
   if(canDoubleDown() ===true){
     player.chips -= player.bet;
-    multiplyBet = 2;
+    player.bet = player.bet*2
     
-    betAmount.innerHTML = `Ditt bet: ${player.bet*multiplyBet}`;
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
+    amountChips.innerHTML = `Antal chips: ${player.chips}`;
     currentCard = kortlek.dra_kort();
     playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
     player.points += currentCard.value;
@@ -302,46 +303,49 @@ function stand() {
         bustFirstHand = false;
       
       } else if (dealerPoints > 21){
-        betAmount.innerHTML =`Du vann $${player.bet*multiplyBet}`;
-        player.chips += (player.bet + player.bet*multiplyBet);
+        betAmount.innerHTML =`Du vann $${player.bet}`;
+        player.chips += 2*player.bet;
         
       
       } else {
           if (playerValues() === dealerPoints){
             betAmount.innerHTML = 'Push';
-            player.chips += multiplyBet*player.bet;
+            player.chips += player.bet;
           } else if (player.points > dealerPoints){
-            betAmount.innerHTML =`Du vann $${player.bet*multiplyBet}`
-            player.chips += (player.bet + player.bet*multiplyBet);
+            betAmount.innerHTML =`Du vann $${player.bet}`
+            player.chips += 2*player.bet;
           } else if (player.points < dealerPoints ) {
             betAmount.innerHTML ='Dealer vann';
           }
       }
-      
+      betAmount.style.color = '#ffe600';
       
       if (bustSecondHand === true){
         amountChips.innerHTML =`<img src="./images/continue-button.png"/>`;
         bustSecondHand = false;
+        amountChips.style.color = '#ff00d9';
         return ''
       }
       else if (dealerPoints > 21){
-        amountChips.innerHTML =`Du vann $${player.bet*multiplyBet}`;
-        player.chips += (player.bet + player.bet*multiplyBet);
+        amountChips.innerHTML =`Du vann $${player.bet}`;
+        player.chips += (2*player.bet);
         
       } else {
           if (playerValues2() === dealerPoints){
             amountChips.innerHTML = 'Push';
-            player.chips += player.bet*multiplyBet;
+            player.chips += player.bet;
 
           } else if (player.points2 > dealerPoints){
-            amountChips.innerHTML =`Du vann $${player.bet*multiplyBet}`;
-            player.chips += (player.bet + player.bet*multiplyBet);
+            amountChips.innerHTML =`Du vann $${player.bet}`;
+            player.chips += 2*player.bet;
 
           } else if (player.points2 < dealerPoints ) {
             amountChips.innerHTML ='Dealer vann';
 
           }
       }
+      
+      amountChips.style.color = '#ff00d9';
       continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
       return'';
       
@@ -352,8 +356,8 @@ function stand() {
         return '';
       }
       else if (dealerValues() > 21){
-        victoryText.innerHTML =`Du vann $${multiplyBet*player.bet}`;
-        player.chips += player.chips += (player.bet + player.bet*multiplyBet);
+        victoryText.innerHTML =`Du vann $${player.bet}`;
+        player.chips +=  2*player.bet;
         continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
         return'';
       
@@ -364,8 +368,8 @@ function stand() {
             continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
             return '';
           } else if (player.points > dealerPoints){
-            victoryText.innerHTML =`Du vann $${player.bet*multiplyBet}`;
-            player.chips += (player.bet + player.bet*multiplyBet);
+            victoryText.innerHTML =`Du vann $${player.bet}`;
+            player.chips += 2*player.bet;
             continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
             return '';
           } else if (player.points < dealerPoints ) {
@@ -405,6 +409,7 @@ function split() {
   if(canSplit() === false){
     return '';
   }
+  player.chips -= player.bet
   playerCardImage.innerHTML = `<img src=""/>`;
   hasSplit = true;
 
@@ -490,9 +495,11 @@ function startMenu(){
   startDealing.innerHTML = `<img src="./images/Start-Button.png"/>`; // Lägger till bilden på start knappen
   hasSplit = false;
 
+  amountChips.style.color = '#79e217';
+  betAmount.style.color = '#79e217';
+
   player.bet = 0;
   player.points = 0;
-  multiplyBet = 1;
 
   //Alla bilder på kort försvinner
   playerCardImage.innerHTML = "";
@@ -531,14 +538,13 @@ function startOfGame(){
 
   menuButtonsOff = true;
   startDealing.innerHTML = "";
-  amountChips.innerHTML = "";
   betting1.innerHTML = "";
   betting2.innerHTML = "";
   betting3.innerHTML = "";
   betting4.innerHTML = "";
 
 
-  kortlek.blanda();
+  //kortlek.blanda();
   playerCards = [];
   dealerCards = [];
 
