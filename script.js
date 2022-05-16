@@ -282,24 +282,25 @@ function stand() {
   standButton.innerHTML = `<img src=""/>`;
   hitButton.innerHTML = `<img src=""/>`;
 
-
-  while (dealerValues() <17){
-      currentCard = kortlek.dra_kort();
-      dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-      dealerCards.push(currentCard);
-     
-    if (dealerValues() > 21){
-      for (i in dealerCards){
-        if (dealerCards[i].value === 11){
-          dealerCards[i].value = 1;
-          dealerValues();
-          if (dealerPoints <= 21){
-            break;
-              
+  if (bust || (bustFirstHand && bustSecondHand)){
+    while (dealerValues() <17){
+        currentCard = kortlek.dra_kort();
+        dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+        dealerCards.push(currentCard);
+      
+      if (dealerValues() > 21){
+        for (i in dealerCards){
+          if (dealerCards[i].value === 11){
+            dealerCards[i].value = 1;
+            dealerValues();
+            if (dealerPoints <= 21){
+              break;
+                
+            }
           }
         }
-      }
-    } 
+      } 
+    }
   }
     
   handBContainer.style.border = 'transparent';
@@ -548,7 +549,7 @@ function startOfGame(){
   betting4.innerHTML = "";
 
 
-  //kortlek.blanda();
+  kortlek.blanda();
   playerCards = [];
   dealerCards = [];
 
