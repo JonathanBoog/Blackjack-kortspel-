@@ -51,7 +51,7 @@ let betting5 = document.getElementById("button-betting5-container"); // All in
 
 
 
-// En klass för spelaren
+// Ett objekt för spelaren
 let player = {
   chips: 1000,  // Antal pengar
   bet: 0, // Antal satsade pengar
