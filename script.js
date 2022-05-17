@@ -291,7 +291,7 @@ function stand() {
   } else if ((bustFirstHand && bustSecondHand) === true){
     null;
   } else {
-    while (dealerValues() <17){
+    while (dealerValues() <17 || (dealerCards[0].value && dealerCards[1].value) === 11){
         currentCard = kortlek.dra_kort();
         dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
         dealerCards.push(currentCard);
@@ -561,7 +561,7 @@ function startOfGame(){
   betting4.innerHTML = "";
   betting5.innerHTML = "";
 
-  kortlek.blanda();
+  //kortlek.blanda();
   playerCards = [];
   dealerCards = [];
 
