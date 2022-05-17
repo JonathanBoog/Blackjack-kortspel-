@@ -221,6 +221,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+  top: 30%;
   width: 10%;
   height: 10%;
 
