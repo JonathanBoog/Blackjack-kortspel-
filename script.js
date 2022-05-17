@@ -147,7 +147,7 @@ function allIn(){
   if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
     return'';
   }
-    player.bet = player.chips;
+    player.bet += player.chips;
     player.chips = 0;
     betAmount.innerHTML = `Bet: ${player.bet}`;
     amountChips.innerHTML = `Chips: ${player.chips}`;
