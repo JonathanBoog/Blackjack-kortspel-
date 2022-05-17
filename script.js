@@ -561,7 +561,7 @@ function startOfGame(){
   betting4.innerHTML = "";
   betting5.innerHTML = "";
 
-  //kortlek.blanda();
+  kortlek.blanda();
   playerCards = [];
   dealerCards = [];
 
