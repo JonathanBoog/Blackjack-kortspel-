@@ -334,7 +334,7 @@ function stand() {
     }
       
     if (bustSecondHand === true){
-      amountChips.innerHTML =`<img src="./images/continue-button.png"/>`;
+      continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
       bustSecondHand = false;
       return ''
     } else if (dealerPoints > 21){
