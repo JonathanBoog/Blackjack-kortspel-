@@ -132,8 +132,8 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-  width: 25%;
-  height: 25%;
+  width: 20%;
+  height: 20%;
 }
 
 #button-betting2-container {
@@ -141,8 +141,8 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-  width: 25%;
-  height: 25%;
+  width: 20%;
+  height: 20%;
 }
 
 #button-betting3-container {
@@ -150,8 +150,8 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-  width: 25%;
-  height: 25%;
+  width: 20%;
+  height: 20%;
 }
 
 #button-betting4-container {
@@ -159,8 +159,17 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
-  width: 25%;
-  height: 25%;
+  width: 20%;
+  height: 20%;
+}
+
+#button-betting5-container {
+	/*Rutan som knapparna visas i*/
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* Centering i kolumnen, dvs vertikalt */
+  width: 20%;
+  height: 20%;
 }
 
 #handA-container {

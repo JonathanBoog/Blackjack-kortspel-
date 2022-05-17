@@ -46,7 +46,7 @@ let betting1 = document.getElementById("button-betting1-container");
 let betting2 = document.getElementById("button-betting2-container");
 let betting3 = document.getElementById("button-betting3-container");
 let betting4 = document.getElementById("button-betting4-container");
-
+let betting5 = document.getElementById("button-betting5-container");
 
 
 
@@ -103,6 +103,16 @@ function bet4(){
     betAmount.innerHTML = `Ditt bet: ${player.bet}`;
     amountChips.innerHTML = `Antal chips: ${player.chips}`;
   }
+}
+
+function allIn(){
+  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
+    return'';
+  }
+    player.bet = player.chips;
+    player.chips = 0;
+    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
+    amountChips.innerHTML = `Antal chips: ${player.chips}`;
 }
 
 // Klass för att skapa spelkort
@@ -531,6 +541,7 @@ function startMenu(){
   betting2.innerHTML = `<img src="./images/chips100.png"/>`;
   betting3.innerHTML = `<img src="./images/chips500.png"/>`;
   betting4.innerHTML = `<img src="./images/chips1000.png"/>`;
+  betting5.innerHTML = `<img src="./images/allIn.png"/>`
 
 }
 
@@ -550,7 +561,7 @@ function startOfGame(){
   betting2.innerHTML = "";
   betting3.innerHTML = "";
   betting4.innerHTML = "";
-
+  betting5.innerHTML = "";
 
   kortlek.blanda();
   playerCards = [];
@@ -669,6 +680,7 @@ betting1.addEventListener("click", bet1)
 betting2.addEventListener("click", bet2)
 betting3.addEventListener("click", bet3)
 betting4.addEventListener("click", bet4)
+betting5.addEventListener("click", allIn)
 
 startDealing.addEventListener("click", startOfGame) // Knapp för att starta rundan
 continueButton.addEventListener("click",startMenu) // Knapp för att gå vidare till menyn
