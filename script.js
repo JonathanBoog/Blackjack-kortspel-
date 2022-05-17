@@ -22,6 +22,7 @@ document.body.style.backgroundImage = "url('./images/bakgrunds_bild.png')";
 document.body.style.backgroundSize = "cover";
 document.body.style.backgroundRepeat = "no-repeat";
 
+//Indraget från HTML
 let hitButton = document.getElementById("button-1-container"); // Hit knapp
 let splitButton = document.getElementById("button-2-container"); // Split knapp
 let doubledownButton = document.getElementById("button-3-container"); // Double down knapp
@@ -36,8 +37,8 @@ handBContainer.style.border = 'transparent'; // Gör border osynlig
 
 
 let victoryText = document.getElementById("header-text");
-let betAmount = document.getElementById("bet-text"); // Visar mängden som spelaren har bettat
-let amountChips = document.getElementById("amount-chips"); // visar antalet chips som spelaren har
+let betAmount = document.getElementById("bet-text"); // Visar mängden som spelaren har bettat ; den visar även status för en av split händerna
+let amountChips = document.getElementById("amount-chips"); // visar antalet chips som spelaren har ; den visar även status för en av split händerna
 let startDealing = document.getElementById("start-button-container"); 
 let continueButton = document.getElementById("continue-button-container"); 
 
@@ -46,7 +47,7 @@ let betting1 = document.getElementById("button-betting1-container");
 let betting2 = document.getElementById("button-betting2-container");
 let betting3 = document.getElementById("button-betting3-container");
 let betting4 = document.getElementById("button-betting4-container");
-let betting5 = document.getElementById("button-betting5-container");
+let betting5 = document.getElementById("button-betting5-container"); // All in
 
 
 
@@ -57,62 +58,6 @@ let player = {
   points: 0, // Antal poäng
   points2: 0,
   
-}
-function bet1(){
-  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
-    return'';
-  }
-  if(player.chips >= 50){
-    player.bet += 50;
-    player.chips -=50;
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
-    amountChips.innerHTML = `Antal chips: ${player.chips}`;
-  }
-}
-function bet2(){
-  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
-    return'';
-  }
-  if(player.chips >= 100){
-    player.bet += 100;
-    player.chips -=100;
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
-    amountChips.innerHTML = `Antal chips: ${player.chips}`;
-  }
-}
-
-function bet3(){
-  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
-    return'';
-  }
-  if(player.chips >= 500){
-    player.bet += 500;
-    player.chips -=500;
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
-    amountChips.innerHTML = `Antal chips: ${player.chips}`;
-  }
-}
-
-function bet4(){
-  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
-    return'';
-  }
-  if(player.chips >= 1000){
-    player.bet += 1000;
-    player.chips -=1000;
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
-    amountChips.innerHTML = `Antal chips: ${player.chips}`;
-  }
-}
-
-function allIn(){
-  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
-    return'';
-  }
-    player.bet = player.chips;
-    player.chips = 0;
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
-    amountChips.innerHTML = `Antal chips: ${player.chips}`;
 }
 
 // Klass för att skapa spelkort
@@ -140,14 +85,7 @@ class Kort {
       return draget_kort;
     }
   
-    // Visa korten som finns i leken (I ordning)
-  
-    // Visa hur många kort som finns
-    visa_längd() {
-      console.log(`Kortleken har ${this.stack.length} kort`);
-    }
-  
-    // Blanda leken
+    // Blandar leken
     blanda() {
       for (let i = this.stack.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -157,6 +95,63 @@ class Kort {
       }
     }
   }
+
+function bet1(){
+  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
+    return'';
+  }
+  if(player.chips >= 50){
+    player.bet += 50;
+    player.chips -=50;
+    betAmount.innerHTML = `Bet: ${player.bet}`;
+    amountChips.innerHTML = `Chips: ${player.chips}`;
+  }
+}
+function bet2(){
+  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
+    return'';
+  }
+  if(player.chips >= 100){
+    player.bet += 100;
+    player.chips -=100;
+    betAmount.innerHTML = `Bet: ${player.bet}`;
+    amountChips.innerHTML = `Chips: ${player.chips}`;
+  }
+}
+
+function bet3(){
+  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
+    return'';
+  }
+  if(player.chips >= 500){
+    player.bet += 500;
+    player.chips -=500;
+    betAmount.innerHTML = `Bet: ${player.bet}`;
+    amountChips.innerHTML = `Chips: ${player.chips}`;
+  }
+}
+
+function bet4(){
+  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
+    return'';
+  }
+  if(player.chips >= 1000){
+    player.bet += 1000;
+    player.chips -=1000;
+    betAmount.innerHTML = `Bet: ${player.bet}`;
+    amountChips.innerHTML = `Chips: ${player.chips}`;
+  }
+}
+
+function allIn(){
+  if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
+    return'';
+  }
+    player.bet = player.chips;
+    player.chips = 0;
+    betAmount.innerHTML = `Bet: ${player.bet}`;
+    amountChips.innerHTML = `Chips: ${player.chips}`;
+}
 
 function pausecomp(millis)
 {
@@ -231,8 +226,8 @@ function doubleDown() {
     player.chips -= player.bet;
     player.bet = player.bet*2
     
-    betAmount.innerHTML = `Ditt bet: ${player.bet}`;
-    amountChips.innerHTML = `Antal chips: ${player.chips}`;
+    betAmount.innerHTML = `Bet: ${player.bet}`;
+    amountChips.innerHTML = `Chips: ${player.chips}`;
     currentCard = kortlek.dra_kort();
     playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
     player.points += currentCard.value;
@@ -428,8 +423,8 @@ function split() {
 
   secondHand = [];
 
-  betAmount.innerHTML = `Ditt bet: ${player.bet}`;
-  amountChips.innerHTML = `Ditt bet: ${player.bet}`;
+  betAmount.innerHTML = `Bet: ${player.bet}`;
+  amountChips.innerHTML = `Bet: ${player.bet}`;
   betAmount.style.color = '#ffe600';
   amountChips.style.color = '#ff00d9';
 
@@ -525,8 +520,8 @@ function startMenu(){
   handAContainer.innerHTML = "";
   handBContainer.innerHTML = "";
 
-  betAmount.innerHTML = `Ditt bet: ${player.bet}`;
-  amountChips.innerHTML = `Antal chips: ${player.chips}`;
+  betAmount.innerHTML = `Bet: ${player.bet}`;
+  amountChips.innerHTML = `Chips: ${player.chips}`;
   victoryText.innerHTML = "";
   
   // De olika knappar försvinner efter runda
@@ -547,14 +542,17 @@ function startMenu(){
 
 
 function startOfGame(){
-  
   if (menuButtonsOff === true){ // en ny runda får ej starta medan en annan är igång
     return'';
   }
   if (player.bet <= 0){ // rundan får ej starta om man inte bettat något
     return'';
   }
-
+  if (kortlek.stack.length <= 26){
+    kortlek.stack = []
+    nyKortlek();
+  }
+  
   menuButtonsOff = true;
   startDealing.innerHTML = "";
   betting1.innerHTML = "";
