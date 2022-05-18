@@ -54,7 +54,8 @@ let betting5 = document.getElementById("button-betting5-container"); // All in
 // Ett objekt för spelaren
 let player = {
   chips: 1000,  // Antal pengar
-  bet: 0, // Antal satsade pengar
+  bet: 0,
+  bet2: 0, // Antal satsade pengar
   points: 0, // Antal poäng
   points2: 0, //Används för andra handen i split
   
@@ -223,11 +224,18 @@ function hit() {
 
 function doubleDown() {
   if(canDoubleDown() ===true){
+    if (hasSplit === true){
+      betAmount.innerHTML = `Bet: ${player.bet}`;
+      betAmount.innerHTML = `Bet: ${player.bet2}`;
+    } else {
+      betAmount.innerHTML = `Bet: ${player.bet}`;
+      amountChips.innerHTML = `Chips: ${player.chips}`;
+    }
+    
     player.chips -= player.bet;
     player.bet = player.bet*2
     
-    betAmount.innerHTML = `Bet: ${player.bet}`;
-    amountChips.innerHTML = `Chips: ${player.chips}`;
+    
     currentCard = kortlek.dra_kort();
     playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
     player.points += currentCard.value;
@@ -426,13 +434,14 @@ function split() {
   }
   
   player.chips -= player.bet
+  player.bet2 = player.bet
   playerCardImage.innerHTML = `<img src=""/>`; // Tar bort bilderna på spelarens kort i mitten
   hasSplit = true; // Spelaren har nu splittat
 
   secondHand = []; //Lista för den andra handen
 
   betAmount.innerHTML = `Bet: ${player.bet}`; // Uppdaterar bet för den första handen
-  amountChips.innerHTML = `Bet: ${player.bet}`; // Uppdaterar bet för den andra handen
+  amountChips.innerHTML = `Bet: ${player.bet2}`; // Uppdaterar bet för den andra handen
   betAmount.style.color = '#ffe600';  //Färg byts för att matcha kort ramen
   amountChips.style.color = '#ff00d9';
 
@@ -508,6 +517,20 @@ function nyKortlek(){
   }
 }
 
+function gameOver(){
+  victoryText.innerHTML = 'Inga chips kvar'
+  playerCardImage.innerHTML = "";
+  dealerCardImage.innerHTML = "";
+  handAContainer.innerHTML = "";
+  handBContainer.innerHTML = "";
+  standButton.innerHTML = "";
+  hitButton.innerHTML = "";
+  doubledownButton.innerHTML = "";
+  splitButton.innerHTML = "";
+  betAmount.innerHTML = "";
+  amountChips.innerHTML = "";
+}
+
 function startMenu(){
   if (continueButtonOff === true){
     return'';
@@ -515,6 +538,10 @@ function startMenu(){
   continueButtonOff = true; // Stänger av continue knappen
   continueButton.innerHTML =""; // Tar bort bilden för continue
 
+  if (player.chips === 0){
+    gameOver();
+    return''
+  }
   menuButtonsOff = false; // Sätter igång start knappen
   startDealing.innerHTML = `<img src="./images/Start-Button.png"/>`; // Lägger till bilden på start knappen
   hasSplit = false;
