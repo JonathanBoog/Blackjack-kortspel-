@@ -2,7 +2,7 @@
 
 //Variabler
 let hasSplit = false; // Om man har splittat
-let secondHand; 
+let secondHand = []; 
 let firsthand = false //Om spelaren vid split är på sin första hand eller ej 
 let bust = false; // Om bust eller ej
 let playerCards; // Spelarens kort
@@ -13,9 +13,8 @@ let dealerCard2; // Dealerns andra kort
 let bustFirstHand = false; // Vid split; om första hand har bustat
 let bustSecondHand = false; // Vid split; om andra hand har bustat
 let menuButtonsOff; // Knapparna i menyn stängs av
-let firstTwoCards = true; // Om man får två ess tror programmet att det är eventuellt bust och därmed går det inte att använda split
 let continueButtonOff = false; // Off för continue knappen
-
+let hitStandOff = true;
 
 //Background:
 document.body.style.backgroundImage = "url('./images/bakgrunds_bild.png')";
@@ -53,9 +52,9 @@ let betting5 = document.getElementById("button-betting5-container"); // All in
 
 // Ett objekt för spelaren
 let player = {
-  chips: 1000,  // Antal pengar
-  bet: 0,
-  bet2: 0, // Antal satsade pengar
+  chips: 400,  // Antal pengar
+  bet: 0, // Antal satsade pengar
+  bet2: 0, // Antal satsade pengar för andra handen
   points: 0, // Antal poäng
   points2: 0, //Används för andra handen i split
   
@@ -154,16 +153,9 @@ function allIn(){
     amountChips.innerHTML = `Chips: ${player.chips}`;
 }
 
-function pausecomp(millis)
-{
-    var date = new Date();
-    var curDate = null;
-    do { curDate = new Date(); }
-    while(curDate-date < millis);
-}
 
 function hit() {
-  if (menuButtonsOff === false){
+  if (hitStandOff === true){
     return''
   }
   if (hasSplit === true) {
@@ -171,24 +163,6 @@ function hit() {
       currentCard = kortlek.dra_kort();
       handAContainer.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
       playerCards.push(currentCard);
-        if (playerValues() > 21){
-          for (i in playerCards){
-            if (playerCards[i].value === 11){
-              playerCards[i].value = 1;
-              playerValues();
-              if (player.points <= 21){
-                break;
-              }
-            }
-          }
-        }
-        if (playerValues() > 21){
-          betAmount.innerHTML ='Bust';
-          handAContainer.style.border = 'transparent';
-          handBContainer.style.border = '';
-          firsthand = false;
-          bustFirstHand = true;
-        }
 
     } else {
       currentCard = kortlek.dra_kort();
@@ -216,62 +190,121 @@ function hit() {
     currentCard = kortlek.dra_kort();
     playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
     playerCards.push(currentCard);
-    playerValues();
-  }
-  
-  showingButtons();
-}
-
-function doubleDown() {
-  if(canDoubleDown() ===true){
-    if (hasSplit === true){
-      betAmount.innerHTML = `Bet: ${player.bet}`;
-      betAmount.innerHTML = `Bet: ${player.bet2}`;
-    } else {
-      betAmount.innerHTML = `Bet: ${player.bet}`;
-      amountChips.innerHTML = `Chips: ${player.chips}`;
-    }
+  }  
     
-    player.chips -= player.bet;
-    player.bet = player.bet*2
-    
-    
-    currentCard = kortlek.dra_kort();
-    playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
-    player.points += currentCard.value;
-    playerCards.push(currentCard);
-    if (playerValues() > 21){
+  if (hasSplit === false || firsthand === true){
+    if (playerValues() > 21){ 
+      //Gör om eventuella värden på ess till 1 beroende på om spelaren har det totala poängen/värdet över 21 eller ej
       for (i in playerCards){
         if (playerCards[i].value === 11){
           playerCards[i].value = 1;
-          playerValues();
-          if (player.points <= 21){
+          
+          if (playerValues() <= 21){
             break;
           }
         }
       }
     }
-    
-    if (playerValues() > 21){
+    if ((playerValues() > 21) && hasSplit === false){ 
+      //Om spelaren fortfarande har totala poängen/värdet över 21, förlorar spelaren, även kallat bust
       victoryText.innerHTML ='Bust';
       bust = true;
       stand();
-      bust = false;
+    
+    } else if (playerValues() > 21 && hasSplit === true){
+      betAmount.innerHTML ='Bust';
+      handAContainer.style.border = 'transparent';
+      handBContainer.style.border = '';
+      bustFirstHand = true;
+      stand(); 
+    }
+      
+  }
+  showingButtons();
+}
 
+function doubleDown() {
+  if(canDoubleDown() === false){
+    return'';
+  }
+  if (hasSplit === true){
+    betAmount.innerHTML = `Bet: ${player.bet}`;
+    amountChips.innerHTML = `Bet: ${player.bet2}`;
+      
+    if(firsthand === true){
+      player.chips -= player.bet
+      player.bet = player.bet*2
+      betAmount.innerHTML = `Bet: ${player.bet}`;
+      amountChips.innerHTML = `Bet: ${player.bet2}`;
+        
+      currentCard = kortlek.dra_kort();
+      handAContainer.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+    } else {
+      player.chips -= player.bet2
+      player.bet2 = player.bet2*2
+      betAmount.innerHTML = `Bet: ${player.bet}`;
+      amountChips.innerHTML = `Bet: ${player.bet2}`;
+        
+      currentCard = kortlek.dra_kort();
+      handBContainer.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+      secondHand.push(currentCard);
+      if (playerValues2() > 21){
+        for (i in secondHand){
+          if (secondHand[i].value === 11){
+            secondHand[i].value = 1;
+            playerValues2();
+            if (player.points2 <= 21){
+              break;
+            }
+          }
+        }
+      }
+      if (playerValues2() > 21){
+        amountChips.innerHTML ='Bust';
+        bustSecondHand = true;
+        stand();
+        return''
       } else {
         stand();
+        return''
       }
+    }
     
-    standButton.innerHTML = `<img src=""/>`;
-    doubledownButton.innerHTML = `<img src=""/>`;
-    splitButton.innerHTML = `<img src=""/>`;
-    hitButton.innerHTML = `<img src=""/>`;
-    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+  } else {
+    betAmount.innerHTML = `Bet: ${player.bet}`;
+    amountChips.innerHTML = `Chips: ${player.chips}`;
+    player.chips -= player.bet;
+    player.bet = player.bet*2;
+    currentCard = kortlek.dra_kort();
+    playerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${currentCard.bild}.png"/>`;
+  }
+  playerCards.push(currentCard);
+  if (playerValues() > 21){
+    for (i in playerCards){
+      if (playerCards[i].value === 11){
+        playerCards[i].value = 1;
+        if (playerValues() <= 21){
+          break;
+        }
+      }
+    }
+  }
+  if (playerValues() > 21 && hasSplit === false){
+    victoryText.innerHTML ='Bust';
+    bust = true;
+    stand();
+
+  } else if (playerValues() > 21 && hasSplit === true) {
+    betAmount.innerHTML ='Bust';
+    bustFirstHand = true;
+    stand();
+  } else {
+    stand();
   }
 }
 
 function stand() {
-  if (menuButtonsOff === false){
+  if (hitStandOff === true){
     return''
   }
   if(firsthand === true){ //Byter hand från höger till vänster (first till second)
@@ -282,7 +315,7 @@ function stand() {
   }
     
   continueButtonOff = false; // Gör så att knappen "Continue" går att användas
-  
+  hitStandOff = true;
   
   //Visar dealerns kort
   dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
@@ -295,9 +328,7 @@ function stand() {
   hitButton.innerHTML = `<img src=""/>`;
 
   
-  if (bust === true){
-    null;
-  } else if ((bustFirstHand && bustSecondHand) === true){
+  if (bust === true || (bustFirstHand && bustSecondHand) === true){
     null;
   } else {
     while (dealerValues() <17 || (dealerCards[0].value && dealerCards[1].value) === 11){
@@ -323,6 +354,7 @@ function stand() {
   handBContainer.style.border = 'transparent';
 
   if (hasSplit === true){
+    // Första hand
     if (bustFirstHand === true){
       bustFirstHand = false;
       
@@ -341,21 +373,21 @@ function stand() {
           betAmount.innerHTML ='Dealer vann';
         }
     }
-      
+     // Andra hand 
     if (bustSecondHand === true){
       continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
       bustSecondHand = false;
       return ''
     } else if (dealerPoints > 21){
-      amountChips.innerHTML =`Du vann $${player.bet}`;
-      player.chips += (2*player.bet);
+      amountChips.innerHTML =`Du vann $${player.bet2}`;
+      player.chips += (2*player.bet2);
     } else {
       if (playerValues2() === dealerPoints){
         amountChips.innerHTML = 'Push';
-        player.chips += player.bet;
+        player.chips += player.bet2;
 
       } else if (player.points2 > dealerPoints){
-        amountChips.innerHTML =`Du vann $${player.bet}`;
+        amountChips.innerHTML =`Du vann $${player.bet2}`;
         player.chips += 2*player.bet;
 
       } else if (player.points2 < dealerPoints ) {
@@ -370,6 +402,7 @@ function stand() {
   } else {
     if (bust === true){
       continueButton.innerHTML =`<img src="./images/continue-button.png"/>`;
+      bust = false;
       return '';
     
     } else if (dealerValues() > 21){
@@ -456,7 +489,6 @@ function split() {
   currentCard = kortlek.dra_kort(); // Drar nytt kort för den första handen
   playerCards.push(currentCard); //Lägger till till kortet i första handens lista
   
-  
   // Visar de kort som lagts till i båda händerna
   handAContainer.innerHTML = `<img src="./PNG-cards-1.3/${playerCards[0].bild}.png"/>`;
   handAContainer.innerHTML += `<img src="./PNG-cards-1.3/${playerCards[1].bild}.png"/>`;
@@ -485,10 +517,13 @@ function canSplit() {
 
 function canDoubleDown() {
   /* Denna funktion kollar om spelaren får göra double down eller ej*/
-  if (playerCards.length == 2 && (player.chips/player.bet) >= 1 && hasSplit === false) {
+  if (secondHand.length == 2 && (player.chips/player.bet2) >= 1 && firsthand === false && hasSplit === true){
+    return true;
+  } else if (playerCards.length == 2 && (player.chips/player.bet) >= 1) {
     return true;
   } else {
     return false;
+    
   }
 }
 
@@ -562,12 +597,6 @@ function startMenu(){
   amountChips.innerHTML = `Chips: ${player.chips}`;
   victoryText.innerHTML = ""; 
   
-  // De olika knappar försvinner efter runda
-  standButton.innerHTML = "";
-  hitButton.innerHTML = "";
-  doubledownButton.innerHTML = "";
-  splitButton.innerHTML = "";
-  
   
   // Bilder på de olika chipsen
   betting1.innerHTML = `<img src="./images/chips50.png"/>`;
@@ -590,7 +619,8 @@ function startOfGame(){
     kortlek.stack = []
     nyKortlek();
   }
-  
+
+  hitStandOff = false;
   menuButtonsOff = true;
   startDealing.innerHTML = "";
   betting1.innerHTML = "";
@@ -632,6 +662,7 @@ function startOfGame(){
     continueButtonOff = false; // Gör så att continue knappen kan användas
     player.chips += player.bet; // Ger tillbaka det spelaren har bettat
     return '';
+  
   } else if (player.points === 21){ // Om spelaren har fått blackjack
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`; //Visar båda kort som tillhör dealern
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
@@ -640,6 +671,7 @@ function startOfGame(){
     continueButtonOff = false; // Gör så att continue knappen kan användas
     player.chips += 2.5*player.bet; // Spelaren får tillbaka chips beroende på vad spelaren har bettat
     return '';
+  
   } else if (dealerPoints === 21) { //Om dealern får blackjack
     dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`; //Visar båda kort som tillhör dealern
     dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
@@ -654,32 +686,7 @@ function startOfGame(){
 
 function showingButtons (){
   
-  if ((playerValues() > 21) && firstTwoCards === false &&  hasSplit === false){ 
-    //Gör om eventuella värden på ess till 1 beroende på om spelaren har det totala poängen/värdet över 21 eller ej
-    for (i in playerCards){
-      if (playerCards[i].value === 11){
-        playerCards[i].value = 1;
-        playerValues();
-        if (player.points <= 21){
-          break;
-        }
-      }
-    }
-  }
-
-  if ((playerValues() > 21) && firstTwoCards === false && hasSplit === false){ 
-    //Om spelaren fortfarande har totala poängen/värdet över 21, förlorar spelaren, även kallat bust
-    victoryText.innerHTML ='Bust';
-    standButton.innerHTML = `<img src=""/>`;
-    doubledownButton.innerHTML = `<img src=""/>`;
-    splitButton.innerHTML = `<img src=""/>`;
-    hitButton.innerHTML = `<img src=""/>`;
-    bust = true;
-    stand();
-    continueButton.innerHTML =`<img src="./images/continue-button.png"/>`; //Continue knapp visas
-    bust = false;
-    }
-  else if (canSplit()) {
+  if (canSplit()) {
     // Visar knapparna split, hit, stand och double down till
 
     standButton.innerHTML = `<img src="./images/standbutton.png"/>`;
@@ -687,7 +694,7 @@ function showingButtons (){
     doubledownButton.innerHTML = `<img src="./images/doubledownbutton.png"/>`;
     splitButton.innerHTML = `<img src="./images/splitbutton.png"/>`;
 
-  } else if (canDoubleDown() && hasSplit === false) {
+  } else if (canDoubleDown()) {
     splitButton.innerHTML = ""; //Tar bort bilden för Split
 
     //Visar knapparna hit, double down & stand
@@ -700,7 +707,6 @@ function showingButtons (){
     splitButton.innerHTML = ""; //Tar bort bilden för Split
     doubledownButton.innerHTML = ""; //Tar bort bilden för double down
     }
-  firstTwoCards = false; 
 }
 
 //Huvudprogram
