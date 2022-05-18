@@ -52,7 +52,7 @@ let betting5 = document.getElementById("button-betting5-container"); // All in
 
 // Ett objekt för spelaren
 let player = {
-  chips: 400,  // Antal pengar
+  chips: 250,  // Antal pengar
   bet: 0, // Antal satsade pengar
   bet2: 0, // Antal satsade pengar för andra handen
   points: 0, // Antal poäng
@@ -184,6 +184,7 @@ function hit() {
         amountChips.innerHTML ='Bust';
         bustSecondHand = true;
         stand();
+        return''
       }
     }
   } else {
@@ -210,6 +211,7 @@ function hit() {
       victoryText.innerHTML ='Bust';
       bust = true;
       stand();
+      return''
     
     } else if (playerValues() > 21 && hasSplit === true){
       betAmount.innerHTML ='Bust';
@@ -217,6 +219,7 @@ function hit() {
       handBContainer.style.border = '';
       bustFirstHand = true;
       stand(); 
+      return''
     }
       
   }
@@ -228,8 +231,6 @@ function doubleDown() {
     return'';
   }
   if (hasSplit === true){
-    betAmount.innerHTML = `Bet: ${player.bet}`;
-    amountChips.innerHTML = `Bet: ${player.bet2}`;
       
     if(firsthand === true){
       player.chips -= player.bet
@@ -317,7 +318,7 @@ function stand() {
   continueButtonOff = false; // Gör så att knappen "Continue" går att användas
   hitStandOff = true;
   
-  //Visar dealerns kort
+  //Visar dealerns kort och det är här som dealerCard1 och dealerCard2 kommer till användning
   dealerCardImage.innerHTML = `<img src="./PNG-cards-1.3/${dealerCard1.bild}.png"/>`;
   dealerCardImage.innerHTML += `<img src="./PNG-cards-1.3/${dealerCard2.bild}.png"/>`;
 
