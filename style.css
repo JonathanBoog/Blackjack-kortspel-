@@ -31,7 +31,7 @@ body {
   align-items: bottom; /* Vertikalt centrerad */
   justify-content: center; /* Horisontellt centrerad */
   text-align: bottom;
-  color: rgb(24, 239, 13);
+  color: #ffffff;
   background-color: transparent;
 }
 

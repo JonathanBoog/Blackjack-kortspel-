@@ -582,8 +582,8 @@ function startMenu(){
   startDealing.innerHTML = `<img src="./images/Start-Button.png"/>`; // Lägger till bilden på start knappen
   hasSplit = false;
 
-  amountChips.style.color = '#79e217'; // Återställer färgerna som de var innan split funktionen kallades
-  betAmount.style.color = '#79e217';
+  amountChips.style.color = '#ffffff'; // Återställer färgerna som de var innan split funktionen kallades
+  betAmount.style.color = '#ffffff';
 
   player.bet = 0; //resettar bet samt poäng från kort
   player.points = 0;
