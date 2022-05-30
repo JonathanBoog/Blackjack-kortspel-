@@ -11,7 +11,7 @@ let dealerPoints; // Dealerns sammanlagda poäng på kort
 let dealerCard1; // Dealerns första kort
 let dealerCard2; // Dealerns andra kort
 let bustFirstHand = false; // Används vid split; om första hand har bustat
-let bustSecondHand = false; // Används id split; om andra hand har bustat
+let bustSecondHand = false; // Används vid split; om andra hand har bustat
 let menuButtonsOff; // Används för att stänga av menyknapparna när rundan startar, som t.ex start knappen, bet knappen m.m
 let continueButtonOff = false; // Off för continue knappen
 let hitStandOff = true; // Används för att stänga av hit samt stand när de inte ska kunna användas
@@ -224,6 +224,9 @@ function startMenu(){
 }
 
 function bet1(){
+  /*
+   Detta är en funktion som bettar 50 vid tryck på bilden med ett chip av värde 50
+ */
   if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
     return'';
   }
@@ -235,6 +238,9 @@ function bet1(){
   }
 }
 function bet2(){
+  /*
+   Detta är en funktion som bettar 100 vid tryck på bilden med ett chip av värde 100
+ */
   if (menuButtonsOff === true){  //Om betting knappen är avstängd eller ej
     return'';
   }
@@ -247,6 +253,9 @@ function bet2(){
 }
 
 function bet3(){
+  /*
+   Detta är en funktion som bettar 500 vid tryck på bilden med ett chip av värde 500
+ */
   if (menuButtonsOff === true){ //Om betting knappen är avstängd eller ej
     return'';
   }
@@ -259,6 +268,9 @@ function bet3(){
 }
 
 function bet4(){
+  /*
+   Detta är en funktion som bettar 1000 vid tryck på bilden med ett chip av värde 1000
+ */
   if (menuButtonsOff === true){ // stänger av betting knappen när rundan startar
     return'';
   }
@@ -271,6 +283,9 @@ function bet4(){
 }
 
 function allIn(){
+  /*
+   Detta är en funktion som bettar allting du har vid tryck på bilden av ett all-in chip
+ */
   if (menuButtonsOff === true){  //Om betting knappen är avstängd eller ej
     return'';
   }
@@ -464,7 +479,12 @@ function hit() {
   showingButtons();  //Uppdatering av bilderna till knapparna hit, stand, split & double down
 }
 
+//Double down funktion
 function doubleDown() {
+  /**
+   * Denna funktion dubblerar spelarens insats vid den specifika handen samt att spelaren blir
+   * tillgivet ett till kort, och inga fler kort utöver det.
+   */
   if(canDoubleDown() === false){ //Om spelaren får använda double down eller ej
     return'';
   }
@@ -551,8 +571,11 @@ function doubleDown() {
 }
 
 
-
+//Split
 function split() {
+  /**
+   * Spelaren kommer matcha originalinsatsen och dela upp de två första korten till två separata händer.
+   */
   if(canSplit() === false){ // Om spelaren får använda split eller ej
     return '';
   }
@@ -595,7 +618,13 @@ function split() {
 
 }
 
+//Stand
 function stand() {
+  /**
+   * Tar inga ytterligare kort.
+   * Jämför de olika värden på kort för spelare och dealer
+   * 
+   */
   if (hitStandOff === true){ // Om spelaren får använda stand eller ej
     return''
   }
@@ -730,7 +759,7 @@ function stand() {
   }
 }
 
-
+//Avslutar spelet
 function gameOver(){
   victoryText.innerHTML = 'Inga chips kvar' // Skriver ut allra sista meddelandet innan förlust
   
@@ -753,7 +782,7 @@ function gameOver(){
 
 
 /*    Huvudprogram  */
-let kortlek = new Kortlek(); //Skapar en kortlek
+let kortlek = new Kortlek(); //Skapar en stack för kortleken
 startMenu(); // Startar menyn
 
 
